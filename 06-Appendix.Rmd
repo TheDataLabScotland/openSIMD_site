@@ -1,0 +1,8 @@
+# Appendix {#appendix}
+
+This book was compiled in the following R session:
+
+```{r}
+sessionInfo()
+```
+

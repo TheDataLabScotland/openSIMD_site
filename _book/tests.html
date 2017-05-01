@@ -8,7 +8,7 @@
   <title>openSIMD</title>
   <meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
   <meta name="description" content="This project is a translation of the SIMD procedure from SAS into R.">
-  <meta name="generator" content="bookdown 0.1 and GitBook 2.6.7">
+  <meta name="generator" content="bookdown 0.3 and GitBook 2.6.7">
 
   <meta property="og:title" content="openSIMD" />
   <meta property="og:type" content="book" />
@@ -26,11 +26,6 @@
 <meta name="author" content="Maike Waldmann &amp; Roman Popat">
 
 
-<script type="text/x-mathjax-config">
-MathJax.Hub.Config({
-  TeX: { equationNumbers: { autoNumber: "AMS" } }
-});
-</script>
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -38,7 +33,7 @@ MathJax.Hub.Config({
   
   
 <link rel="prev" href="functions.html">
-
+<link rel="next" href="appendix.html">
 
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
@@ -129,6 +124,7 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <li class="chapter" data-level="6.3" data-path="tests.html"><a href="tests.html#domain-ranks"><i class="fa fa-check"></i><b>6.3</b> Domain ranks</a></li>
 <li class="chapter" data-level="6.4" data-path="tests.html"><a href="tests.html#simd-ranks"><i class="fa fa-check"></i><b>6.4</b>  SIMD ranks</a></li>
 </ul></li>
+<li class="chapter" data-level="7" data-path="appendix.html"><a href="appendix.html"><i class="fa fa-check"></i><b>7</b> Appendix</a></li>
 </ul>
 
       </nav>
@@ -152,12 +148,8 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <div id="normalisation" class="section level2">
 <h2><span class="header-section-number">6.1</span> Normalisation</h2>
 <p>The first step is calculating the normalised scores. To recap, this is the inverse (right tail) of the cumulative normal (probit) function of the proportional indicator rank (see <a href="functions.html#normalScores">normalScores</a> function). First we read in some data, raw data and normalised scores calculated in SIMD, pertaining to the number of individuals with no qualifications.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">noquals &lt;-<span class="st"> </span><span class="kw">read_excel</span>(<span class="st">&quot;../openSIMD_analysis/data/NOQUALSDATA.xls&quot;</span>)</code></pre></div>
-<pre><code>## DEFINEDNAME: 00 00 00 0b 0b 00 00 00 00 00 00 00 00 00 00 4e 4f 51 55 41 4c 53 44 41 54 41 3b 00 00 00 00 40 1b 00 00 02 00 
-## DEFINEDNAME: 00 00 00 0b 0b 00 00 00 00 00 00 00 00 00 00 4e 4f 51 55 41 4c 53 44 41 54 41 3b 00 00 00 00 40 1b 00 00 02 00 
-## DEFINEDNAME: 00 00 00 0b 0b 00 00 00 00 00 00 00 00 00 00 4e 4f 51 55 41 4c 53 44 41 54 41 3b 00 00 00 00 40 1b 00 00 02 00 
-## DEFINEDNAME: 00 00 00 0b 0b 00 00 00 00 00 00 00 00 00 00 4e 4f 51 55 41 4c 53 44 41 54 41 3b 00 00 00 00 40 1b 00 00 02 00</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">str</span>(noquals)</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">noquals &lt;-<span class="st"> </span><span class="kw">read_excel</span>(<span class="st">&quot;../openSIMD_analysis/data/NOQUALSDATA.xls&quot;</span>)
+<span class="kw">str</span>(noquals)</code></pre></div>
 <pre><code>## Classes &#39;tbl_df&#39;, &#39;tbl&#39; and &#39;data.frame&#39;:    6976 obs. of  3 variables:
 ##  $ DZ      : chr  &quot;S01006506&quot; &quot;S01006507&quot; &quot;S01006508&quot; &quot;S01006509&quot; ...
 ##  $ Noquals : num  52.8 95.9 38.6 80.1 77.2 ...
@@ -225,9 +217,8 @@ sas_weights &lt;-<span class="st"> </span><span class="kw">read_excel</span>(<sp
 <h2><span class="header-section-number">6.3</span> Domain ranks</h2>
 <p>The next step is to measure the correspondence in domain ranks across the board. First we need a few more packages and we will load in the SAS results and R results.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(tidyr)
-<span class="kw">library</span>(ggplot2)</code></pre></div>
-<pre><code>## Warning: package &#39;ggplot2&#39; was built under R version 3.3.2</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(purrr)
+<span class="kw">library</span>(ggplot2)
+<span class="kw">library</span>(purrr)
 sas_results &lt;-<span class="st"> </span><span class="kw">read_excel</span>(<span class="st">&quot;../openSIMD_analysis/data/updated SIMD and domain ranks.xlsx&quot;</span>, <span class="dt">sheet =</span> <span class="dv">1</span>)
 r_results &lt;-<span class="st"> </span><span class="kw">read.csv</span>(<span class="st">&quot;../openSIMD_analysis/results/domain_ranks.csv&quot;</span>)</code></pre></div>
 <p>Now we need to do a little bit of wrangling, we need to select some collumns and then rename them. Then we need to join the two datasets together for plotting.</p>
@@ -291,8 +282,8 @@ gridExtra::<span class="kw">grid.arrange</span>(p1, p2)</code></pre></div>
           </div>
         </div>
       </div>
-<a href="functions.html" class="navigation navigation-prev navigation-unique" aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-
+<a href="functions.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="appendix.html" class="navigation navigation-next " aria-label="Next page""><i class="fa fa-angle-right"></i></a>
 
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
 <script src="libs/gitbook-2.6.7/js/lunr.js"></script>
@@ -305,6 +296,7 @@ gridExtra::<span class="kw">grid.arrange</span>(p1, p2)</code></pre></div>
 require(["gitbook"], function(gitbook) {
 gitbook.start({
 "sharing": {
+"github": false,
 "facebook": true,
 "twitter": true,
 "google": false,
