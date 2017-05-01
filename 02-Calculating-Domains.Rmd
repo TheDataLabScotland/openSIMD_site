@@ -1,0 +1,104 @@
+# Calculating Domains
+
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(
+	message = FALSE,
+	warning = TRUE,
+	echo = TRUE
+)
+```
+
+In this section, I will explain the code used to calculate the individual domain scores. 
+
+## Setting up
+
+The first things to do are
+
+- load a few packages
+- source the script containing the utility functions, see [section 5](#functions) for documentation on the functions used.
+- read in the data
+
+You will need to make sure that these file paths correspond to where your files are. If you have opened the `openSIMD_analysis.Rproj` then the directories of interest will be `scripts/utils` and `data`.
+
+```{r load_resources}
+library(readxl)
+library(dplyr)
+source("../openSIMD_analysis/scripts/utils/helpers.R")
+d <- read_excel("../openSIMD_analysis/data/SIMD2016_indicators.xlsx", sheet = 3, na = "*")
+```
+
+The data here contains the published indicators, in this case from SIMD 2016.
+
+```{r}
+str(d)
+```
+
+## The recipe
+
+For each domain the process has several steps, many of which are repeated across domains. To aid in applying this recipe I have defined some functions in `scripts/utils/helpers.R`, see [section 5](#functions). The steps of the recipe and associated functions are as follows:
+
+- Select the indicators (collumns) that are relevant to that domain, using the function `dplyr::select`.
+- Calculate the 'normalised' ranks for each indicator, using the function `normalScores` defined herein.
+- Replace missing values, using the function `replaceMissing` defined herein.
+- Derive the factor analysis weights for each indicator, using the function `getFAWeights` defined herein.
+- Combine the normalised ranks and weights to generate the indicator score, using the function `combineWeightsAndNorms` defined herein.
+- Rank the indicator score, using the function `base::rank`.
+
+There is some variation in this as you will see with some of the domains.
+
+## dplyr
+
+Throughout this project, I make use of the tools in the `dplyr` package for data manipulation including the `%>%` notation for forwards piping. I won't introduce these tools but if they are unfamiliar, I recommend reading [this article](https://cran.rstudio.com/web/packages/dplyr/vignettes/introduction.html). See the section on chaining for an explanation of the `%>%` pipe.
+
+## An example: Education
+
+As an example of the process, here we will calculate the domain rank for the education domain. In this first chunk of code I will create the normalised ranks for the education domain as follows:
+
+```{r}
+normalised_education <- d %>% # start with the raw data
+  select(Attendance, Attainment, Noquals, NEET, HESA) %>% # select relevant collumns 
+  mutate(Attendance = normalScores(Attendance, forwards = FALSE)) %>% # replace each collumn with its normalised values
+  mutate(Attainment = normalScores(Attainment, forwards = FALSE)) %>%
+  mutate(Noquals    = normalScores(Noquals, forwards = TRUE)) %>%
+  mutate(NEET       = normalScores(NEET, forwards = TRUE)) %>%
+  mutate(HESA       = normalScores(HESA, forwards = FALSE)) %>%
+  mutate_all(funs(replaceMissing)) # replace missing values
+```
+
+**Note:** you may see a warning here because normalScores can generate missing values from missing values. This is fine, these will be replaced with 0, when you call `replaceMissing`. 
+
+The only decisions to make are (a) which collumns to select using `select` and (b) which orientation to rank (and then normalise) each indicator. The orientation is determined by the `forwards` argument to `normalScores` see [normalScores](#normalScores) for further information.
+
+Now that we have the normalised scores we can peform the next steps. First we need to obtain factor analysis weights. Factor analysis is performed and the proportional loading on factor 1 is extracted to serve as the weighting of the indicators. This is achieved by the [getFAWeights](#getFAWeights) function as follows;
+
+```{r}
+education_weights <- getFAWeights(normalised_education)
+```
+
+Now that we have the normalised indicator scores and weights derived from factor analysis, we can combine them with the utility function [combineWeightsAndNorms](#combineWeightsAndNorms). Each normalised indicator variable is multiplied by its proportional weight derived from factor analysis, as follows;
+
+```{r}
+education_score <- combineWeightsAndNorms(education_weights, normalised_education)
+```
+
+Finally we rank these weighted scores to generate the domain rank.
+
+```{r}
+education_rank <- rank(-education_score)
+```
+
+## Variations
+
+The remaining domains are calculated in a similar way with some variations, rather than explaining each one I will explain the possible variations.
+
+The housing rank is the sum of the overcrowding rate and non-central heating rate ranked. For the crime, income and employment ranks we simply use the published ranks due to non-disclosure restrictions.
+
+In the education example above, when applying the `normalScores` function, we needed to pay attention to the `forwards` argument to orient the variables (decide whether a high value was good or bad). In the other domains this is not the case and each indicator can take the default value `forwards = TRUE`. This means we can use the `dplyr::mutate_all()` function instead of mutating each variable indipendently. In addition, if domain indicators collumn names have something in common we can select them with `dplyr::select(contains("some_common_text"))`.
+
+The access domain is unique in that it has 2 sud-domains (drive and public transport) which are processed in the normal way (normalise -> weight -> rank) before exponential transform (covered in the next section on [calculating SIMD](#simd)) and then summed in a 2:1 ratio before final ranking for the domain.
+ 
+## Re-assigning ranks
+
+We have included some functionality to manually re-assign ranks to allow for certain exceptions. This is done via the [reassignRank](#reassignRank) function.
+

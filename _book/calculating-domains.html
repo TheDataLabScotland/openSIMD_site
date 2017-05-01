@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html >
+
+<head>
+
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>openSIMD</title>
+  <meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+  <meta name="description" content="This project is a translation of the SIMD procedure from SAS into R.">
+  <meta name="generator" content="bookdown 0.1 and GitBook 2.6.7">
+
+  <meta property="og:title" content="openSIMD" />
+  <meta property="og:type" content="book" />
+  
+  
+  <meta property="og:description" content="This project is a translation of the SIMD procedure from SAS into R." />
+  
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="openSIMD" />
+  
+  <meta name="twitter:description" content="This project is a translation of the SIMD procedure from SAS into R." />
+  
+
+<meta name="author" content="Maike Waldmann &amp; Roman Popat">
+
+
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+  TeX: { equationNumbers: { autoNumber: "AMS" } }
+});
+</script>
+
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  
+  
+<link rel="prev" href="introduction.html">
+<link rel="next" href="simd.html">
+
+<script src="libs/jquery-2.2.3/jquery.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+
+<style type="text/css">
+div.sourceCode { overflow-x: auto; }
+table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
+  margin: 0; padding: 0; vertical-align: baseline; border: none; }
+table.sourceCode { width: 100%; line-height: 100%; }
+td.lineNumbers { text-align: right; padding-right: 4px; padding-left: 4px; color: #aaaaaa; border-right: 1px solid #aaaaaa; }
+td.sourceCode { padding-left: 5px; }
+code > span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code > span.dt { color: #902000; } /* DataType */
+code > span.dv { color: #40a070; } /* DecVal */
+code > span.bn { color: #40a070; } /* BaseN */
+code > span.fl { color: #40a070; } /* Float */
+code > span.ch { color: #4070a0; } /* Char */
+code > span.st { color: #4070a0; } /* String */
+code > span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code > span.ot { color: #007020; } /* Other */
+code > span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code > span.fu { color: #06287e; } /* Function */
+code > span.er { color: #ff0000; font-weight: bold; } /* Error */
+code > span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+code > span.cn { color: #880000; } /* Constant */
+code > span.sc { color: #4070a0; } /* SpecialChar */
+code > span.vs { color: #4070a0; } /* VerbatimString */
+code > span.ss { color: #bb6688; } /* SpecialString */
+code > span.im { } /* Import */
+code > span.va { color: #19177c; } /* Variable */
+code > span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code > span.op { color: #666666; } /* Operator */
+code > span.bu { } /* BuiltIn */
+code > span.ex { } /* Extension */
+code > span.pp { color: #bc7a00; } /* Preprocessor */
+code > span.at { color: #7d9029; } /* Attribute */
+code > span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code > span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code > span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+</style>
+
+</head>
+
+<body>
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li class="chapter" data-level="1" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i><b>1</b> Preface</a></li>
+<li class="chapter" data-level="2" data-path="introduction.html"><a href="introduction.html"><i class="fa fa-check"></i><b>2</b> Introduction</a></li>
+<li class="chapter" data-level="3" data-path="calculating-domains.html"><a href="calculating-domains.html"><i class="fa fa-check"></i><b>3</b> Calculating Domains</a><ul>
+<li class="chapter" data-level="3.1" data-path="calculating-domains.html"><a href="calculating-domains.html#setting-up"><i class="fa fa-check"></i><b>3.1</b> Setting up</a></li>
+<li class="chapter" data-level="3.2" data-path="calculating-domains.html"><a href="calculating-domains.html#the-recipe"><i class="fa fa-check"></i><b>3.2</b> The recipe</a></li>
+<li class="chapter" data-level="3.3" data-path="calculating-domains.html"><a href="calculating-domains.html#dplyr"><i class="fa fa-check"></i><b>3.3</b> dplyr</a></li>
+<li class="chapter" data-level="3.4" data-path="calculating-domains.html"><a href="calculating-domains.html#an-example-education"><i class="fa fa-check"></i><b>3.4</b> An example: Education</a></li>
+<li class="chapter" data-level="3.5" data-path="calculating-domains.html"><a href="calculating-domains.html#variations"><i class="fa fa-check"></i><b>3.5</b> Variations</a></li>
+<li class="chapter" data-level="3.6" data-path="calculating-domains.html"><a href="calculating-domains.html#re-assigning-ranks"><i class="fa fa-check"></i><b>3.6</b> Re-assigning ranks</a></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="simd.html"><a href="simd.html"><i class="fa fa-check"></i><b>4</b> Calculating SIMD</a></li>
+<li class="chapter" data-level="5" data-path="functions.html"><a href="functions.html"><i class="fa fa-check"></i><b>5</b> Functions</a><ul>
+<li class="chapter" data-level="5.1" data-path="functions.html"><a href="functions.html#normalScores"><i class="fa fa-check"></i><b>5.1</b> normalScores</a></li>
+<li class="chapter" data-level="5.2" data-path="functions.html"><a href="functions.html#replaceMissing"><i class="fa fa-check"></i><b>5.2</b> replaceMissing</a></li>
+<li class="chapter" data-level="5.3" data-path="functions.html"><a href="functions.html#getFAWeights"><i class="fa fa-check"></i><b>5.3</b> getFAWeights</a></li>
+<li class="chapter" data-level="5.4" data-path="functions.html"><a href="functions.html#combineWeightsAndNorms"><i class="fa fa-check"></i><b>5.4</b> combineWeightsAndNorms</a></li>
+<li class="chapter" data-level="5.5" data-path="functions.html"><a href="functions.html#expoTransform"><i class="fa fa-check"></i><b>5.5</b>  expoTransform</a></li>
+<li class="chapter" data-level="5.6" data-path="functions.html"><a href="functions.html#reassignRank"><i class="fa fa-check"></i><b>5.6</b>  reassignRank</a></li>
+</ul></li>
+<li class="chapter" data-level="6" data-path="tests.html"><a href="tests.html"><i class="fa fa-check"></i><b>6</b> Tests</a><ul>
+<li class="chapter" data-level="6.1" data-path="tests.html"><a href="tests.html#normalisation"><i class="fa fa-check"></i><b>6.1</b> Normalisation</a></li>
+<li class="chapter" data-level="6.2" data-path="tests.html"><a href="tests.html#factor-analysis-weights"><i class="fa fa-check"></i><b>6.2</b> Factor analysis weights</a></li>
+<li class="chapter" data-level="6.3" data-path="tests.html"><a href="tests.html#domain-ranks"><i class="fa fa-check"></i><b>6.3</b> Domain ranks</a></li>
+<li class="chapter" data-level="6.4" data-path="tests.html"><a href="tests.html#simd-ranks"><i class="fa fa-check"></i><b>6.4</b>  SIMD ranks</a></li>
+</ul></li>
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">openSIMD</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="calculating-domains" class="section level1">
+<h1><span class="header-section-number">3</span> Calculating Domains</h1>
+<p>In this section, I will explain the code used to calculate the individual domain scores.</p>
+<div id="setting-up" class="section level2">
+<h2><span class="header-section-number">3.1</span> Setting up</h2>
+<p>The first things to do are</p>
+<ul>
+<li>load a few packages</li>
+<li>source the script containing the utility functions, see <a href="functions.html#functions">section 5</a> for documentation on the functions used.</li>
+<li>read in the data</li>
+</ul>
+<p>You will need to make sure that these file paths correspond to where your files are. If you have opened the <code>openSIMD_analysis.Rproj</code> then the directories of interest will be <code>scripts/utils</code> and <code>data</code>.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(readxl)
+<span class="kw">library</span>(dplyr)
+<span class="kw">source</span>(<span class="st">&quot;../openSIMD_analysis/scripts/utils/helpers.R&quot;</span>)
+d &lt;-<span class="st"> </span><span class="kw">read_excel</span>(<span class="st">&quot;../openSIMD_analysis/data/SIMD2016_indicators.xlsx&quot;</span>, <span class="dt">sheet =</span> <span class="dv">3</span>, <span class="dt">na =</span> <span class="st">&quot;*&quot;</span>)</code></pre></div>
+<p>The data here contains the published indicators, in this case from SIMD 2016.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">str</span>(d)</code></pre></div>
+<pre><code>## Classes &#39;tbl_df&#39;, &#39;tbl&#39; and &#39;data.frame&#39;:    6976 obs. of  36 variables:
+##  $ Data_Zone                     : chr  &quot;S01006506&quot; &quot;S01006507&quot; &quot;S01006508&quot; &quot;S01006509&quot; ...
+##  $ Intermediate_Zone             : chr  &quot;Culter&quot; &quot;Culter&quot; &quot;Culter&quot; &quot;Culter&quot; ...
+##  $ Council_area                  : chr  &quot;Aberdeen City&quot; &quot;Aberdeen City&quot; &quot;Aberdeen City&quot; &quot;Aberdeen City&quot; ...
+##  $ Total_population              : num  904 830 694 573 676 ...
+##  $ Working_age_population_revised: num  605 491 519 354 414 464 322 354 710 491 ...
+##  $ Income_rate                   : num  0.07 0.07 0.05 0.05 0.1 0.03 0.02 0.03 0.01 0.01 ...
+##  $ Income_count                  : num  60 60 30 30 70 25 10 20 15 10 ...
+##  $ Employment_rate               : num  0.07 0.05 0.03 0.06 0.07 0.03 0.02 0.03 0.01 0.01 ...
+##  $ Employment_count              : num  40 25 15 20 30 15 5 10 10 5 ...
+##  $ CIF                           : num  60 40 45 65 75 50 35 55 25 35 ...
+##  $ ALCOHOL                       : num  103.4 33 54.3 141.9 52.3 ...
+##  $ DRUG                          : num  27.6 39.9 32.9 49.2 234.9 ...
+##  $ SMR                           : num  67 86 43 88 149 68 77 137 86 61 ...
+##  $ DEPRESS                       : num  0.123 0.148 0.127 0.154 0.197 ...
+##  $ LBWT                          : num  0 0.0256 0.0556 0.037 0 ...
+##  $ EMERG                         : num  80 97.7 70 87.9 105.1 ...
+##  $ Attendance                    : num  0.863 0.825 0.877 0.942 0.805 ...
+##  $ Attainment                    : num  5.93 5.57 5.8 5.62 5.33 ...
+##  $ Noquals                       : num  52.8 95.9 38.6 80.1 77.2 ...
+##  $ NEET                          : num  0.03 0.01 0 0.04 0.04 0.03 0.08 0.02 0.03 0.03 ...
+##  $ HESA                          : num  0.1304 0.1014 0.1486 0.0816 0.0857 ...
+##  $ drive_petrol                  : num  2.42 3.68 3.24 2.51 2.08 ...
+##  $ drive_GP                      : num  2.92 4.02 3.6 2.47 2.17 ...
+##  $ drive_PO                      : num  1.52 2.74 2.09 1.96 1.67 ...
+##  $ drive_primary                 : num  2.03 3.13 2.66 1.44 1.51 ...
+##  $ drive_retail                  : num  1.5 2.65 1.88 2.22 1.93 ...
+##  $ drive_secondary               : num  10.8 11.5 11.5 10.8 10.6 ...
+##  $ PT_GP                         : num  8.44 8.33 7.85 7.43 5.14 ...
+##  $ PT_Post                       : num  5.99 7.26 5.83 8.31 6.63 ...
+##  $ PT_retail                     : num  5.71 6.79 5.25 8.44 6.62 ...
+##  $ crime_count                   : num  8.01 4 4 NA 12.01 ...
+##  $ crime_rate                    : num  88.6 48.2 57.7 NA 177.7 ...
+##  $ overcrowded_count             : num  87 85 31 42 50 27 27 15 10 29 ...
+##  $ nocentralheat_count           : num  10 4 8 6 7 8 9 4 3 1 ...
+##  $ overcrowded_rate              : num  0.1021 0.1017 0.0482 0.0724 0.0867 ...
+##  $ nocentralheat_rate            : num  0.01174 0.00478 0.01244 0.01034 0.01213 ...</code></pre>
+</div>
+<div id="the-recipe" class="section level2">
+<h2><span class="header-section-number">3.2</span> The recipe</h2>
+<p>For each domain the process has several steps, many of which are repeated across domains. To aid in applying this recipe I have defined some functions in <code>scripts/utils/helpers.R</code>, see <a href="functions.html#functions">section 5</a>. The steps of the recipe and associated functions are as follows:</p>
+<ul>
+<li>Select the indicators (collumns) that are relevant to that domain, using the function <code>dplyr::select</code>.</li>
+<li>Calculate the ‘normalised’ ranks for each indicator, using the function <code>normalScores</code> defined herein.</li>
+<li>Replace missing values, using the function <code>replaceMissing</code> defined herein.</li>
+<li>Derive the factor analysis weights for each indicator, using the function <code>getFAWeights</code> defined herein.</li>
+<li>Combine the normalised ranks and weights to generate the indicator score, using the function <code>combineWeightsAndNorms</code> defined herein.</li>
+<li>Rank the indicator score, using the function <code>base::rank</code>.</li>
+</ul>
+<p>There is some variation in this as you will see with some of the domains.</p>
+</div>
+<div id="dplyr" class="section level2">
+<h2><span class="header-section-number">3.3</span> dplyr</h2>
+<p>Throughout this project, I make use of the tools in the <code>dplyr</code> package for data manipulation including the <code>%&gt;%</code> notation for forwards piping. I won’t introduce these tools but if they are unfamiliar, I recommend reading <a href="https://cran.rstudio.com/web/packages/dplyr/vignettes/introduction.html">this article</a>. See the section on chaining for an explanation of the <code>%&gt;%</code> pipe.</p>
+</div>
+<div id="an-example-education" class="section level2">
+<h2><span class="header-section-number">3.4</span> An example: Education</h2>
+<p>As an example of the process, here we will calculate the domain rank for the education domain. In this first chunk of code I will create the normalised ranks for the education domain as follows:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">normalised_education &lt;-<span class="st"> </span>d %&gt;%<span class="st"> </span><span class="co"># start with the raw data</span>
+<span class="st">  </span><span class="kw">select</span>(Attendance, Attainment, Noquals, NEET, HESA) %&gt;%<span class="st"> </span><span class="co"># select relevant collumns </span>
+<span class="st">  </span><span class="kw">mutate</span>(<span class="dt">Attendance =</span> <span class="kw">normalScores</span>(Attendance, <span class="dt">forwards =</span> <span class="ot">FALSE</span>)) %&gt;%<span class="st"> </span><span class="co"># replace each collumn with its normalised values</span>
+<span class="st">  </span><span class="kw">mutate</span>(<span class="dt">Attainment =</span> <span class="kw">normalScores</span>(Attainment, <span class="dt">forwards =</span> <span class="ot">FALSE</span>)) %&gt;%
+<span class="st">  </span><span class="kw">mutate</span>(<span class="dt">Noquals    =</span> <span class="kw">normalScores</span>(Noquals, <span class="dt">forwards =</span> <span class="ot">TRUE</span>)) %&gt;%
+<span class="st">  </span><span class="kw">mutate</span>(<span class="dt">NEET       =</span> <span class="kw">normalScores</span>(NEET, <span class="dt">forwards =</span> <span class="ot">TRUE</span>)) %&gt;%
+<span class="st">  </span><span class="kw">mutate</span>(<span class="dt">HESA       =</span> <span class="kw">normalScores</span>(HESA, <span class="dt">forwards =</span> <span class="ot">FALSE</span>)) %&gt;%
+<span class="st">  </span><span class="kw">mutate_all</span>(<span class="kw">funs</span>(replaceMissing)) <span class="co"># replace missing values</span></code></pre></div>
+<pre><code>## Warning in qnorm(rn, mean = 0, sd = 1, lower.tail = forwards): NaNs
+## produced
+
+## Warning in qnorm(rn, mean = 0, sd = 1, lower.tail = forwards): NaNs
+## produced
+
+## Warning in qnorm(rn, mean = 0, sd = 1, lower.tail = forwards): NaNs
+## produced
+
+## Warning in qnorm(rn, mean = 0, sd = 1, lower.tail = forwards): NaNs
+## produced</code></pre>
+<p><strong>Note:</strong> you may see a warning here because normalScores can generate missing values from missing values. This is fine, these will be replaced with 0, when you call <code>replaceMissing</code>.</p>
+<p>The only decisions to make are (a) which collumns to select using <code>select</code> and (b) which orientation to rank (and then normalise) each indicator. The orientation is determined by the <code>forwards</code> argument to <code>normalScores</code> see <a href="functions.html#normalScores">normalScores</a> for further information.</p>
+<p>Now that we have the normalised scores we can peform the next steps. First we need to obtain factor analysis weights. Factor analysis is performed and the proportional loading on factor 1 is extracted to serve as the weighting of the indicators. This is achieved by the <a href="functions.html#getFAWeights">getFAWeights</a> function as follows;</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">education_weights &lt;-<span class="st"> </span><span class="kw">getFAWeights</span>(normalised_education)</code></pre></div>
+<p>Now that we have the normalised indicator scores and weights derived from factor analysis, we can combine them with the utility function <a href="functions.html#combineWeightsAndNorms">combineWeightsAndNorms</a>. Each normalised indicator variable is multiplied by its proportional weight derived from factor analysis, as follows;</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">education_score &lt;-<span class="st"> </span><span class="kw">combineWeightsAndNorms</span>(education_weights, normalised_education)</code></pre></div>
+<p>Finally we rank these weighted scores to generate the domain rank.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">education_rank &lt;-<span class="st"> </span><span class="kw">rank</span>(-education_score)</code></pre></div>
+</div>
+<div id="variations" class="section level2">
+<h2><span class="header-section-number">3.5</span> Variations</h2>
+<p>The remaining domains are calculated in a similar way with some variations, rather than explaining each one I will explain the possible variations.</p>
+<p>The housing rank is the sum of the overcrowding rate and non-central heating rate ranked. For the crime, income and employment ranks we simply use the published ranks due to non-disclosure restrictions.</p>
+<p>In the education example above, when applying the <code>normalScores</code> function, we needed to pay attention to the <code>forwards</code> argument to orient the variables (decide whether a high value was good or bad). In the other domains this is not the case and each indicator can take the default value <code>forwards = TRUE</code>. This means we can use the <code>dplyr::mutate_all()</code> function instead of mutating each variable indipendently. In addition, if domain indicators collumn names have something in common we can select them with <code>dplyr::select(contains(&quot;some_common_text&quot;))</code>.</p>
+<p>The access domain is unique in that it has 2 sud-domains (drive and public transport) which are processed in the normal way (normalise -&gt; weight -&gt; rank) before exponential transform (covered in the next section on <a href="simd.html#simd">calculating SIMD</a>) and then summed in a 2:1 ratio before final ranking for the domain.</p>
+</div>
+<div id="re-assigning-ranks" class="section level2">
+<h2><span class="header-section-number">3.6</span> Re-assigning ranks</h2>
+<p>We have included some functionality to manually re-assign ranks to allow for certain exceptions. This is done via the <a href="functions.html#reassignRank">reassignRank</a> function.</p>
+
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="introduction.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="simd.html" class="navigation navigation-next " aria-label="Next page""><i class="fa fa-angle-right"></i></a>
+
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/lunr.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script>
+require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"facebook": true,
+"twitter": true,
+"google": false,
+"weibo": false,
+"instapper": false,
+"vk": false,
+"all": ["facebook", "google", "twitter", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": null,
+"text": null
+},
+"download": ["_main.pdf"],
+"toc": {
+"collapse": "subsection"
+}
+});
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    if (location.protocol !== "file:" && /^https?:/.test(script.src))
+      script.src  = script.src.replace(/^https?:/, '');
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+</body>
+
+</html>

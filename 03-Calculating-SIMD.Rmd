@@ -1,0 +1,43 @@
+# Calculating SIMD {#simd}
+
+For the final calculation of the SIMD score and ranks we follow a few simple steps, see the script `openSIMD_analysis/scripts/calculations/openSIMD.R`.
+
+First we load the packages and data from the previous domain rank calculations.
+
+```{r}
+library(dplyr)
+source("../openSIMD_analysis/scripts/utils/helpers.R")
+domains <- read.csv("../openSIMD_analysis/results/domain_ranks.csv")
+```
+
+Then we inverse rank the domain ranks (so that low values are most deprived) and exponentially transform, spreading out the most deprived areas for a finer distinction in this region.
+
+```{r}
+invRank <- function(v) rank(-v)
+
+exponential_domains <- domains %>%
+  mutate_at(vars(-data_zone), funs(invRank)) %>%
+  mutate_at(vars(-data_zone), funs(expoTransform))
+```
+
+We then combine the domain ranks via a weighting and rank the resulting combination.
+
+```{r}
+with(exponential_domains, {
+  simd_score <<-
+    .28 * income +
+    .28 * employment +
+    .14 * health +
+    .14 * education +
+    .09 * access +
+    .05 * crime +
+    .02 * housing
+})
+```
+
+Finally we invert the rank once more giving us the final SIMD rank.
+
+```{r}
+simd_rank <- rank(-simd_score)
+```
+
