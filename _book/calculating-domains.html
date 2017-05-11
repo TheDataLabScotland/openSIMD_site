@@ -106,24 +106,12 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <li class="chapter" data-level="3.2" data-path="calculating-domains.html"><a href="calculating-domains.html#the-recipe"><i class="fa fa-check"></i><b>3.2</b> The recipe</a></li>
 <li class="chapter" data-level="3.3" data-path="calculating-domains.html"><a href="calculating-domains.html#dplyr"><i class="fa fa-check"></i><b>3.3</b> dplyr</a></li>
 <li class="chapter" data-level="3.4" data-path="calculating-domains.html"><a href="calculating-domains.html#an-example-education"><i class="fa fa-check"></i><b>3.4</b> An example: Education</a></li>
-<li class="chapter" data-level="3.5" data-path="calculating-domains.html"><a href="calculating-domains.html#variations"><i class="fa fa-check"></i><b>3.5</b> Variations</a></li>
+<li class="chapter" data-level="3.5" data-path="calculating-domains.html"><a href="calculating-domains.html#Variations"><i class="fa fa-check"></i><b>3.5</b> Variations</a></li>
 <li class="chapter" data-level="3.6" data-path="calculating-domains.html"><a href="calculating-domains.html#re-assigning-ranks"><i class="fa fa-check"></i><b>3.6</b> Re-assigning ranks</a></li>
 </ul></li>
 <li class="chapter" data-level="4" data-path="simd.html"><a href="simd.html"><i class="fa fa-check"></i><b>4</b> Calculating SIMD</a></li>
-<li class="chapter" data-level="5" data-path="functions.html"><a href="functions.html"><i class="fa fa-check"></i><b>5</b> Functions</a><ul>
-<li class="chapter" data-level="5.1" data-path="functions.html"><a href="functions.html#normalScores"><i class="fa fa-check"></i><b>5.1</b> normalScores</a></li>
-<li class="chapter" data-level="5.2" data-path="functions.html"><a href="functions.html#replaceMissing"><i class="fa fa-check"></i><b>5.2</b> replaceMissing</a></li>
-<li class="chapter" data-level="5.3" data-path="functions.html"><a href="functions.html#getFAWeights"><i class="fa fa-check"></i><b>5.3</b> getFAWeights</a></li>
-<li class="chapter" data-level="5.4" data-path="functions.html"><a href="functions.html#combineWeightsAndNorms"><i class="fa fa-check"></i><b>5.4</b> combineWeightsAndNorms</a></li>
-<li class="chapter" data-level="5.5" data-path="functions.html"><a href="functions.html#expoTransform"><i class="fa fa-check"></i><b>5.5</b>  expoTransform</a></li>
-<li class="chapter" data-level="5.6" data-path="functions.html"><a href="functions.html#reassignRank"><i class="fa fa-check"></i><b>5.6</b>  reassignRank</a></li>
-</ul></li>
-<li class="chapter" data-level="6" data-path="tests.html"><a href="tests.html"><i class="fa fa-check"></i><b>6</b> Tests</a><ul>
-<li class="chapter" data-level="6.1" data-path="tests.html"><a href="tests.html#normalisation"><i class="fa fa-check"></i><b>6.1</b> Normalisation</a></li>
-<li class="chapter" data-level="6.2" data-path="tests.html"><a href="tests.html#factor-analysis-weights"><i class="fa fa-check"></i><b>6.2</b> Factor analysis weights</a></li>
-<li class="chapter" data-level="6.3" data-path="tests.html"><a href="tests.html#domain-ranks"><i class="fa fa-check"></i><b>6.3</b> Domain ranks</a></li>
-<li class="chapter" data-level="6.4" data-path="tests.html"><a href="tests.html#simd-ranks"><i class="fa fa-check"></i><b>6.4</b>  SIMD ranks</a></li>
-</ul></li>
+<li class="chapter" data-level="5" data-path="functions.html"><a href="functions.html"><i class="fa fa-check"></i><b>5</b> Functions</a></li>
+<li class="chapter" data-level="6" data-path="QA.html"><a href="QA.html"><i class="fa fa-check"></i><b>6</b> Quality Assurance</a></li>
 <li class="chapter" data-level="7" data-path="appendix.html"><a href="appendix.html"><i class="fa fa-check"></i><b>7</b> Appendix</a></li>
 </ul>
 
@@ -147,17 +135,26 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <p>In this section, I will explain the code used to calculate the individual domain scores.</p>
 <div id="setting-up" class="section level2">
 <h2><span class="header-section-number">3.1</span> Setting up</h2>
-<p>The first things to do are</p>
+<p>Here is a complete list of the files in <code>openSIMD_analysis</code> that we need for <strong>openSIMD</strong>:</p>
+<ul>
+<li><code>scripts/calculations/domains.R</code> to calculate the domains</li>
+<li><code>scripts/calculations/openSIMD.R</code> to calculate SIMD</li>
+<li><code>scripts/utils/helpers.R</code>, some utility functions (see <a href="functions.html#functions">Functions</a> for documentation)</li>
+<li><code>data/SIMD16 indicator data.xlsx</code></li>
+<li><code>data/SIMD16 ranks and domain ranks.xlsx</code>.</li>
+</ul>
+<p>If you use RStudio you can also use <code>openSIMD_analysis.Rproj</code> as a shortcut.</p>
+<p>Starting in <code>domains.R</code>, the first things to do are:</p>
 <ul>
 <li>load a few packages</li>
-<li>source the script containing the utility functions, see <a href="functions.html#functions">section 5</a> for documentation on the functions used.</li>
+<li>source the utility functions</li>
 <li>read in the data</li>
 </ul>
-<p>You will need to make sure that these file paths correspond to where your files are. If you have opened the <code>openSIMD_analysis.Rproj</code> then the directories of interest will be <code>scripts/utils</code> and <code>data</code>.</p>
+<p>You will need to make sure that the file paths in your code correspond to where your files are. If you are using RStudio and you have opened the <code>openSIMD_analysis.Rproj</code> then the directories of interest will be <code>scripts/utils</code> and <code>data</code>.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(readxl)
 <span class="kw">library</span>(dplyr)
 <span class="kw">source</span>(<span class="st">&quot;../openSIMD_analysis/scripts/utils/helpers.R&quot;</span>)
-d &lt;-<span class="st"> </span><span class="kw">read_excel</span>(<span class="st">&quot;../openSIMD_analysis/data/SIMD2016_indicators.xlsx&quot;</span>, <span class="dt">sheet =</span> <span class="dv">3</span>, <span class="dt">na =</span> <span class="st">&quot;*&quot;</span>)</code></pre></div>
+d &lt;-<span class="st"> </span><span class="kw">read_excel</span>(<span class="st">&quot;../openSIMD_analysis/data/SIMD16 indicator data.xlsx&quot;</span>, <span class="dt">sheet =</span> <span class="dv">3</span>, <span class="dt">na =</span> <span class="st">&quot;*&quot;</span>)</code></pre></div>
 <p>The data here contains the published indicators, in this case from SIMD 2016.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">str</span>(d)</code></pre></div>
 <pre><code>## Classes &#39;tbl_df&#39;, &#39;tbl&#39; and &#39;data.frame&#39;:    6976 obs. of  36 variables:
@@ -200,16 +197,16 @@ d &lt;-<span class="st"> </span><span class="kw">read_excel</span>(<span class="
 </div>
 <div id="the-recipe" class="section level2">
 <h2><span class="header-section-number">3.2</span> The recipe</h2>
-<p>For each domain the process has several steps, many of which are repeated across domains. To aid in applying this recipe I have defined some functions in <code>scripts/utils/helpers.R</code>, see <a href="functions.html#functions">section 5</a>. The steps of the recipe and associated functions are as follows:</p>
+<p>For each domain, the process has several steps, many of which are repeated across domains. To make this recipe easier to follow, I have defined some <strong>openSIMD</strong> utility functions in <code>scripts/utils/helpers.R</code>, see <a href="functions.html#functions">Functions</a>. The steps of the recipe and the associated functions are as follows:</p>
 <ul>
-<li>Select the indicators (collumns) that are relevant to that domain, using the function <code>dplyr::select</code>.</li>
-<li>Calculate the ‘normalised’ ranks for each indicator, using the function <code>normalScores</code> defined herein.</li>
-<li>Replace missing values, using the function <code>replaceMissing</code> defined herein.</li>
-<li>Derive the factor analysis weights for each indicator, using the function <code>getFAWeights</code> defined herein.</li>
-<li>Combine the normalised ranks and weights to generate the indicator score, using the function <code>combineWeightsAndNorms</code> defined herein.</li>
+<li>Select the indicators (columns) that are relevant to that domain, using the function <code>dplyr::select</code></li>
+<li>Calculate normalised ranks for each indicator, using the function <a href="#normalScores"><code>normalScores</code></a></li>
+<li>Replace missing values, using the function <a href="#replaceMissing"><code>replaceMissing</code></a></li>
+<li>Derive the factor analysis weights for each indicator, using the function <a href="#getFAWeights"><code>getFAWeights</code></a></li>
+<li>Combine the normalised ranks and weights to generate the indicator score, using the function <a href="#combineWeightsAndNorms"><code>combineWeightsAndNorms</code></a></li>
 <li>Rank the indicator score, using the function <code>base::rank</code>.</li>
 </ul>
-<p>There is some variation in this as you will see with some of the domains.</p>
+<p>Not all steps are used for every domain.</p>
 </div>
 <div id="dplyr" class="section level2">
 <h2><span class="header-section-number">3.3</span> dplyr</h2>
@@ -217,10 +214,10 @@ d &lt;-<span class="st"> </span><span class="kw">read_excel</span>(<span class="
 </div>
 <div id="an-example-education" class="section level2">
 <h2><span class="header-section-number">3.4</span> An example: Education</h2>
-<p>As an example of the process, here we will calculate the domain rank for the education domain. In this first chunk of code I will create the normalised ranks for the education domain as follows:</p>
+<p>As an example of the process, here we will calculate the domain rank for the education domain. In this first chunk of code, I will create the normalised ranks for the education domain as follows:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">normalised_education &lt;-<span class="st"> </span>d %&gt;%<span class="st"> </span><span class="co"># start with the raw data</span>
-<span class="st">  </span><span class="kw">select</span>(Attendance, Attainment, Noquals, NEET, HESA) %&gt;%<span class="st"> </span><span class="co"># select relevant collumns </span>
-<span class="st">  </span><span class="kw">mutate</span>(<span class="dt">Attendance =</span> <span class="kw">normalScores</span>(Attendance, <span class="dt">forwards =</span> <span class="ot">FALSE</span>)) %&gt;%<span class="st"> </span><span class="co"># replace each collumn with its normalised values</span>
+<span class="st">  </span><span class="kw">select</span>(Attendance, Attainment, Noquals, NEET, HESA) %&gt;%<span class="st"> </span><span class="co"># select relevant columns </span>
+<span class="st">  </span><span class="kw">mutate</span>(<span class="dt">Attendance =</span> <span class="kw">normalScores</span>(Attendance, <span class="dt">forwards =</span> <span class="ot">FALSE</span>)) %&gt;%<span class="st"> </span><span class="co"># replace each column with its normalised values</span>
 <span class="st">  </span><span class="kw">mutate</span>(<span class="dt">Attainment =</span> <span class="kw">normalScores</span>(Attainment, <span class="dt">forwards =</span> <span class="ot">FALSE</span>)) %&gt;%
 <span class="st">  </span><span class="kw">mutate</span>(<span class="dt">Noquals    =</span> <span class="kw">normalScores</span>(Noquals, <span class="dt">forwards =</span> <span class="ot">TRUE</span>)) %&gt;%
 <span class="st">  </span><span class="kw">mutate</span>(<span class="dt">NEET       =</span> <span class="kw">normalScores</span>(NEET, <span class="dt">forwards =</span> <span class="ot">TRUE</span>)) %&gt;%
@@ -237,25 +234,26 @@ d &lt;-<span class="st"> </span><span class="kw">read_excel</span>(<span class="
 
 ## Warning in qnorm(rn, mean = 0, sd = 1, lower.tail = forwards): NaNs
 ## produced</code></pre>
-<p><strong>Note:</strong> you may see a warning here because normalScores can generate missing values from missing values. This is fine, these will be replaced with 0, when you call <code>replaceMissing</code>.</p>
-<p>The only decisions to make are (a) which collumns to select using <code>select</code> and (b) which orientation to rank (and then normalise) each indicator. The orientation is determined by the <code>forwards</code> argument to <code>normalScores</code> see <a href="functions.html#normalScores">normalScores</a> for further information.</p>
-<p>Now that we have the normalised scores we can peform the next steps. First we need to obtain factor analysis weights. Factor analysis is performed and the proportional loading on factor 1 is extracted to serve as the weighting of the indicators. This is achieved by the <a href="functions.html#getFAWeights">getFAWeights</a> function as follows;</p>
+<p><strong>Note:</strong> you may see a warning here because <a href="#normalScores"><code>normalScores</code></a> can generate missing values from missing values. This is fine, these will be replaced with 0, when you call <a href="#replaceMissing"><code>replaceMissing</code></a>.</p>
+<p>The only decisions to make are (a) which columns to select using <code>select</code> and (b) which orientation to rank (and then normalise) each indicator. The orientation is determined by the <code>forwards</code> argument to <code>normalScores</code>, see <a href="#normalScores"><code>normalScores</code></a> and <a href="calculating-domains.html#Variations">Variations</a> for further information.</p>
+<p>When combining the indicators, we need to apply a different weight to each. The weights are derived through factor analysis of the normalised indicator scores, and the proportional loadings on factor 1 serve as the weightings. We extract the loadings using the <a href="#getFAWeights"><code>getFAWeights</code></a> function as follows:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">education_weights &lt;-<span class="st"> </span><span class="kw">getFAWeights</span>(normalised_education)</code></pre></div>
-<p>Now that we have the normalised indicator scores and weights derived from factor analysis, we can combine them with the utility function <a href="functions.html#combineWeightsAndNorms">combineWeightsAndNorms</a>. Each normalised indicator variable is multiplied by its proportional weight derived from factor analysis, as follows;</p>
+<p>Now that we have the normalised indicator scores and weights, we can combine them with the utility function <a href="#combineWeightsAndNorms"><code>combineWeightsAndNorms</code></a>. Each normalised indicator variable is multiplied by its weight derived from factor analysis, as follows:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">education_score &lt;-<span class="st"> </span><span class="kw">combineWeightsAndNorms</span>(education_weights, normalised_education)</code></pre></div>
-<p>Finally we rank these weighted scores to generate the domain rank.</p>
+<p>Finally we rank these weighted scores to generate the domain rank (1 = most deprived).</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">education_rank &lt;-<span class="st"> </span><span class="kw">rank</span>(-education_score)</code></pre></div>
 </div>
-<div id="variations" class="section level2">
+<div id="Variations" class="section level2">
 <h2><span class="header-section-number">3.5</span> Variations</h2>
-<p>The remaining domains are calculated in a similar way with some variations, rather than explaining each one I will explain the possible variations.</p>
-<p>The housing rank is the sum of the overcrowding rate and non-central heating rate ranked. For the crime, income and employment ranks we simply use the published ranks due to non-disclosure restrictions.</p>
-<p>In the education example above, when applying the <code>normalScores</code> function, we needed to pay attention to the <code>forwards</code> argument to orient the variables (decide whether a high value was good or bad). In the other domains this is not the case and each indicator can take the default value <code>forwards = TRUE</code>. This means we can use the <code>dplyr::mutate_all()</code> function instead of mutating each variable indipendently. In addition, if domain indicators collumn names have something in common we can select them with <code>dplyr::select(contains(&quot;some_common_text&quot;))</code>.</p>
-<p>The access domain is unique in that it has 2 sud-domains (drive and public transport) which are processed in the normal way (normalise -&gt; weight -&gt; rank) before exponential transform (covered in the next section on <a href="simd.html#simd">calculating SIMD</a>) and then summed in a 2:1 ratio before final ranking for the domain.</p>
+<p>The remaining domains are calculated in a similar way with some variations. Rather than explaining each domain, I will explain the possible variations.</p>
+<p>For the housing domain, the sum of the overcrowding rate and non-central heating rate is ranked.</p>
+<p>For the crime, income and employment domains, we simply use the published ranks. The reason for this is that the published indicator data for these domains is rounded, whereas the published domain ranks are based on unrounded data and therefore more precise.</p>
+<p>In the education example above, when applying the <a href="#normalScores"><code>normalScores</code></a> function, we needed to pay attention to the <code>forwards</code> argument to orient the variables (decide whether a high value was good or bad). In the other domains this is not the case and each indicator can take the default value <code>forwards = TRUE</code> (high value = deprived). This means we can use the <code>dplyr::mutate_all()</code> function instead of mutating each variable independently. In addition, if indicator column names have something in common, we can select them with <code>dplyr::select(contains(&quot;some_common_text&quot;))</code>.</p>
+<p>The access domain is unique in that it has two sub-domains (drive time and public transport time) which are processed separately in the normal way (normalise -&gt; weight -&gt; rank). Then, each sub-domain is exponentially transformed (covered in the next section on <a href="simd.html#simd">calculating SIMD</a>) and the resulting scores are summed in a 2:1 ratio before the final ranking for the domain.</p>
 </div>
 <div id="re-assigning-ranks" class="section level2">
 <h2><span class="header-section-number">3.6</span> Re-assigning ranks</h2>
-<p>We have included some functionality to manually re-assign ranks to allow for certain exceptions. This is done via the <a href="functions.html#reassignRank">reassignRank</a> function.</p>
+<p>We have included some functionality to manually re-assign ranks to allow for certain exceptions. This is done via the <a href="#reassignRank"><code>reassignRank</code></a> function.</p>
 
 </div>
 </div>
@@ -296,7 +294,7 @@ gitbook.start({
 "link": null,
 "text": null
 },
-"download": ["_main.pdf"],
+"download": null,
 "toc": {
 "collapse": "subsection"
 }
@@ -304,17 +302,6 @@ gitbook.start({
 });
 </script>
 
-<!-- dynamically load mathjax for compatibility with self-contained -->
-<script>
-  (function () {
-    var script = document.createElement("script");
-    script.type = "text/javascript";
-    script.src  = "https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
-    if (location.protocol !== "file:" && /^https?:/.test(script.src))
-      script.src  = script.src.replace(/^https?:/, '');
-    document.getElementsByTagName("head")[0].appendChild(script);
-  })();
-</script>
 </body>
 
 </html>

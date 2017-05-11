@@ -1,13 +1,18 @@
+---
+output:
+  pdf_document: default
+  html_document: default
+---
 # Functions {#functions}
 
-Below is some documentation of the novel functions developed for this project and used repeatedly throughout the openSIMD proceedure.
+Below is the documentation of the functions developed for this project, which are used throughout the **openSIMD** procedure.
 
 ## normalScores {#normalScores}
 
-The `normalScores` function is the first in the work flow. This calculates the normal scores for each indicator. The normal score is defined as follows:
+This function calculates the normal scores for each indicator. The normal score is defined as follows:
 
 \begin{equation*}
-y_{i} = \phi^{-1} \frac{r_{i}}{n + 1} 
+y_{i} = \phi^{-1}\left(\frac{r_{i}}{n + 1}\right)
 \end{equation*}
 
 where: $\phi^{-1}$ is the inverse cumulative normal (probit) function, $r_{i}$ is the rank of the i'th observation and $n$ is the number of non-missing observations for the ranking variable. This is the inverse cumulative normal probability density of proportional ranks. The resulting variable should appear normally distributed regardless of the input data. We translated this approach using the [SAS documentation](http://support.sas.com/documentation/cdl/en/proc/61895/HTML/default/viewer.htm#a000146840.htm) as a guide resulting in the following R function.
@@ -35,17 +40,17 @@ The function takes a numeric vector as its input `v`. It first ranks this input 
 
 ## replaceMissing {#replaceMissing}
 
-A simple utility function to replace missing values, once normalised indicator scores have been calculated. A convenience wrapper around `replace`. The function find missing values (as well as `Inf` and `-Inf`) in a vector and replaces them with `0`. The use case is for example when a data zone is empty, has a missing value for an indicator but we want it to sit in the centre of the distribution and so we assign a value of 0.
+This function replaces missing values, once normalised indicator scores have been calculated. The function finds missing values (as well as `Inf` and `-Inf`) in a vector and replaces them with `0`. This is used in **openSIMD** where a data zone has zero population, or has a missing value for an indicator, and we want it to sit in the centre of the distribution and so we assign a value of 0.
 
 ```{r}
 replaceMissing <- function(v) replace(v, is.na(v) | v == Inf | v == -Inf, 0)
 ```
 
-Pass a numeric vector `v` and return a vector of equal length with missing values filled.
+The function takes a numeric vector `v` and returns a vector of equal length with missing values replaced with 0.
 
 ## getFAWeights {#getFAWeights}
 
-This function performs a factor analysis using the `psych::fa` function. It then extracts the weights on the first resulting factor, converts then to poportions (of the sum of weights) and then returns them as individual elements of a list. This is designed to be equivalent to the SAS procedure in previous SIMD calculations, however the results are only comparable to two decimal places, likely due to differences in the implementation of factor analysis in the two packages (see [section on tests](#tests)).
+This function performs a factor analysis using the `psych::fa` function. It then extracts the loadings on the first resulting factor, converts them to proportions of the sum of loadings, the weights, and then returns them as individual elements of a list. This is designed to be equivalent to the SAS procedure in previous SIMD calculations, however the results are only comparable up to two decimal places, likely due to differences in the implementation of factor analysis in the two packages (see [section on Quality Assurance](#QA)).
 
 ```{r}
 getFAWeights <- function(dat, ...) {
@@ -63,11 +68,11 @@ getFAWeights <- function(dat, ...) {
   }
 ```
 
-The function takes a data frame `dat` as its main argument, it is assumed that this data frame contains all of the variables for factor analysis and in the required order. The return value is a list with individual elements corresponding to the proportional weight of variables in the same order as the input data. A list is returned here for compatibility with the next function `combineWeightsAndNorms` however this can be easily converted to a vector with `unlist`.
+The function takes a data.frame `dat` which contains all of the variables for factor analysis in the required order. The return value is a list with individual elements corresponding to the weights of variables in the same order as the input data. A list is returned here for compatibility with the next function `combineWeightsAndNorms`; however, this can be easily converted to a vector with `unlist`.
 
 ## combineWeightsAndNorms {#combineWeightsAndNorms}
 
-This function takes the normalised indicator scores and the weights derived from factor analysis, multiplies them out and then takes the sum of these weighted indicator scores to get the final score for that domain. 
+This function takes the normalised indicator scores and the weights derived from factor analysis, multiplies them out and then takes the sum of these weighted indicator scores to get the final score for that domain. Weights and indicators need to be in the same order.
 
 ```{r}
 combineWeightsAndNorms <- function(weights, norms) {
@@ -79,12 +84,12 @@ combineWeightsAndNorms <- function(weights, norms) {
 }
 ```
 
-The function takes a list of weights (generated by `getFAWeights` and a data.frame of normalised scores, it 
+The function takes a list of weights (generated by `getFAWeights`) and a data.frame of normalised scores. The function 
 returns a numeric vector containing the combined domain score.
 
-## expoTransform {#expoTransform}
+## expoTransform {#expoTransform}
 
-This function recapitulates the exponential transformation used in SIMD to transform the weighted domain ranks before combining domains. 
+This function exponentially transforms the (inverted) domain ranks. 
 
 ```{r}
 expoTransform <- function(ranks) {
@@ -97,11 +102,11 @@ expoTransform <- function(ranks) {
 }
 ```
 
-The function takes an numeric vector (of the ranks) and returns a numeric vector of equal length containing the transformed values.
+The function takes a numeric vector of the (inverted) ranks and returns a numeric vector of equal length containing the transformed values.
 
-## reassignRank {#reassignRank}
+## reassignRank {#reassignRank}
 
-A function to make manual reassignments of ranks to individual data zones, can be used when there are strange exceptions such as empty data zones.
+This function manually reassigns ranks to individual data zones. It can be used, for example, when the domain ranking needs to reflect a population of zero in a data zone.
 
 ```{r}
 reassignRank <- function(data, domain, data_zone, end = "max", offset = 0) {
@@ -121,4 +126,4 @@ reassignRank <- function(data, domain, data_zone, end = "max", offset = 0) {
 }
 ```
 
-The function needs a data.frame of ranks containing a collumn named 'data_zone'. The function will take that data.frame change the rank of the indicator in question (with an optional offset) and then re-rank. The function returns the corrected data.frame.
+The function takes a data.frame containing a column named 'data_zone' and a ranked variable. The function changes the rank of the data zone in question (with an optional offset), and it then re-ranks the whole variable. The function returns the corrected data.frame.

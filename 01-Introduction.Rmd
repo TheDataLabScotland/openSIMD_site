@@ -4,14 +4,16 @@ This is a step-by-step guide to the **openSIMD** R code, a code which creates th
 
 SIMD is made up of over 30 indicators which are grouped into seven domains of deprivation. Each domain summarises one aspect of deprivation by combining some of the indicators and using the resulting domain scores to rank each area in Scotland. The seven domain rankings are then combined into an overall, multiple-deprivation SIMD ranking.
 
-Before running the **openSIMD** R code, you will need the published SIMD indicators for four out of the seven domains. For the other three domains, you will need the published domain rankings. The reason for this is that for these three domains, the individual indicators were not published separately, and the published domain scores are rounded. The published domain rankings on the other hand are based on unrounded data and therefore more precise. Both datasets can be downloaded from the [SIMD website](www.gov.scot/SIMD).
+To run the **openSIMD** R code, you need two datasets, SIMD indicator data, and SIMD domain rankings. Both datasets are included here, but can also be downloaded from the [SIMD website](www.gov.scot/SIMD).
+
+For four out of the seven domains, you will use the SIMD indicator data. For the remaining three domains, you will use the domain rankings instead. The reason for this is that in these three domains, the individual indicators are not publicly available, and the published domain scores are rounded to ensure that any individual's privacy is protected. The domain rankings on the other hand were calculated using unrounded data and are therefore more precise. 
 
 After running the **openSIMD** R code, you will have created two csv documents which contain the domain rankings and the overall SIMD ranking for each small area (called data zone) in Scotland. 
 
 We tested this code with SIMD16 data, and you will need to adapt it for other versions of SIMD. 
 
-The rankings you get when using the **openSIMD** code with the published SIMD16 data slightly differ from the published, offical SIMD16 rankings, see my note in [section 1](#preface). SIMD16 as published on the [SIMD website](www.gov.scot/SIMD) is the official version.
+The rankings you get when using the **openSIMD** code with the published SIMD16 data slightly differ from the published, offical SIMD16 rankings, see my note in the [Preface](#preface). SIMD16 as published on the [SIMD website](www.gov.scot/SIMD) is the official version.
 
-Roman Popat from The Data Lab is now going to walk you through the R code. In [section 3](#calculating-domains), he will explain the code used to calculate the individual domain scores. In [section 4](#calculating-SIMD), he will go through the steps necessary for combining the domains into the overall SIMD, and finally, in [section 5](#functions), he will introduce the functions used throughout the code for those calculation steps that came up repeatedly.
+Roman Popat from The Data Lab is now going to walk you through the R code. In the [Calculating Domains](#calculating-domains) section, he will explain the code used to calculate the individual domain scores. In the section on [Calculating SIMD](#calculating-SIMD), he will go through the steps necessary for combining the domains into the overall SIMD. In the [Functions](#functions) section, he will introduce the **openSIMD** utility functions used throughout the code for those calculation steps that came up repeatedly. And finally, he'll show how well the R code replicates the SAS code in the [Quality Assurance](#QA) section.
 
 For any questions about the SIMD methodology have a look at the SIMD Technical Notes on the [SIMD website](www.gov.scot/SIMD), and feel free to contact the SIMD team at [simd@gov.scot](mailto:simd@gov.scot).

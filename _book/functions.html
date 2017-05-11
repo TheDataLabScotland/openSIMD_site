@@ -33,7 +33,7 @@
   
   
 <link rel="prev" href="simd.html">
-<link rel="next" href="tests.html">
+<link rel="next" href="QA.html">
 
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
@@ -101,29 +101,17 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <ul class="summary">
 <li class="chapter" data-level="1" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i><b>1</b> Preface</a></li>
 <li class="chapter" data-level="2" data-path="introduction.html"><a href="introduction.html"><i class="fa fa-check"></i><b>2</b> Introduction</a></li>
-<li class="chapter" data-level="3" data-path="calculating-domains.html"><a href="calculating-domains.html"><i class="fa fa-check"></i><b>3</b> Calculating Domains</a><ul>
-<li class="chapter" data-level="3.1" data-path="calculating-domains.html"><a href="calculating-domains.html#setting-up"><i class="fa fa-check"></i><b>3.1</b> Setting up</a></li>
-<li class="chapter" data-level="3.2" data-path="calculating-domains.html"><a href="calculating-domains.html#the-recipe"><i class="fa fa-check"></i><b>3.2</b> The recipe</a></li>
-<li class="chapter" data-level="3.3" data-path="calculating-domains.html"><a href="calculating-domains.html#dplyr"><i class="fa fa-check"></i><b>3.3</b> dplyr</a></li>
-<li class="chapter" data-level="3.4" data-path="calculating-domains.html"><a href="calculating-domains.html#an-example-education"><i class="fa fa-check"></i><b>3.4</b> An example: Education</a></li>
-<li class="chapter" data-level="3.5" data-path="calculating-domains.html"><a href="calculating-domains.html#variations"><i class="fa fa-check"></i><b>3.5</b> Variations</a></li>
-<li class="chapter" data-level="3.6" data-path="calculating-domains.html"><a href="calculating-domains.html#re-assigning-ranks"><i class="fa fa-check"></i><b>3.6</b> Re-assigning ranks</a></li>
-</ul></li>
+<li class="chapter" data-level="3" data-path="calculating-domains.html"><a href="calculating-domains.html"><i class="fa fa-check"></i><b>3</b> Calculating Domains</a></li>
 <li class="chapter" data-level="4" data-path="simd.html"><a href="simd.html"><i class="fa fa-check"></i><b>4</b> Calculating SIMD</a></li>
 <li class="chapter" data-level="5" data-path="functions.html"><a href="functions.html"><i class="fa fa-check"></i><b>5</b> Functions</a><ul>
 <li class="chapter" data-level="5.1" data-path="functions.html"><a href="functions.html#normalScores"><i class="fa fa-check"></i><b>5.1</b> normalScores</a></li>
 <li class="chapter" data-level="5.2" data-path="functions.html"><a href="functions.html#replaceMissing"><i class="fa fa-check"></i><b>5.2</b> replaceMissing</a></li>
 <li class="chapter" data-level="5.3" data-path="functions.html"><a href="functions.html#getFAWeights"><i class="fa fa-check"></i><b>5.3</b> getFAWeights</a></li>
 <li class="chapter" data-level="5.4" data-path="functions.html"><a href="functions.html#combineWeightsAndNorms"><i class="fa fa-check"></i><b>5.4</b> combineWeightsAndNorms</a></li>
-<li class="chapter" data-level="5.5" data-path="functions.html"><a href="functions.html#expoTransform"><i class="fa fa-check"></i><b>5.5</b>  expoTransform</a></li>
-<li class="chapter" data-level="5.6" data-path="functions.html"><a href="functions.html#reassignRank"><i class="fa fa-check"></i><b>5.6</b>  reassignRank</a></li>
+<li class="chapter" data-level="5.5" data-path="functions.html"><a href="functions.html#expoTransform"><i class="fa fa-check"></i><b>5.5</b> expoTransform</a></li>
+<li class="chapter" data-level="5.6" data-path="functions.html"><a href="functions.html#reassignRank"><i class="fa fa-check"></i><b>5.6</b> reassignRank</a></li>
 </ul></li>
-<li class="chapter" data-level="6" data-path="tests.html"><a href="tests.html"><i class="fa fa-check"></i><b>6</b> Tests</a><ul>
-<li class="chapter" data-level="6.1" data-path="tests.html"><a href="tests.html#normalisation"><i class="fa fa-check"></i><b>6.1</b> Normalisation</a></li>
-<li class="chapter" data-level="6.2" data-path="tests.html"><a href="tests.html#factor-analysis-weights"><i class="fa fa-check"></i><b>6.2</b> Factor analysis weights</a></li>
-<li class="chapter" data-level="6.3" data-path="tests.html"><a href="tests.html#domain-ranks"><i class="fa fa-check"></i><b>6.3</b> Domain ranks</a></li>
-<li class="chapter" data-level="6.4" data-path="tests.html"><a href="tests.html#simd-ranks"><i class="fa fa-check"></i><b>6.4</b>  SIMD ranks</a></li>
-</ul></li>
+<li class="chapter" data-level="6" data-path="QA.html"><a href="QA.html"><i class="fa fa-check"></i><b>6</b> Quality Assurance</a></li>
 <li class="chapter" data-level="7" data-path="appendix.html"><a href="appendix.html"><i class="fa fa-check"></i><b>7</b> Appendix</a></li>
 </ul>
 
@@ -144,12 +132,12 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
             <section class="normal" id="section-">
 <div id="functions" class="section level1">
 <h1><span class="header-section-number">5</span> Functions</h1>
-<p>Below is some documentation of the novel functions developed for this project and used repeatedly throughout the openSIMD proceedure.</p>
+<p>Below is the documentation of the functions developed for this project, which are used throughout the <strong>openSIMD</strong> procedure.</p>
 <div id="normalScores" class="section level2">
 <h2><span class="header-section-number">5.1</span> normalScores</h2>
-<p>The <code>normalScores</code> function is the first in the work flow. This calculates the normal scores for each indicator. The normal score is defined as follows:</p>
+<p>This function calculates the normal scores for each indicator. The normal score is defined as follows:</p>
 <span class="math display">\[\begin{equation*}
-y_{i} = \phi^{-1} \frac{r_{i}}{n + 1} 
+y_{i} = \phi^{-1}\left(\frac{r_{i}}{n + 1}\right)
 \end{equation*}\]</span>
 <p>where: <span class="math inline">\(\phi^{-1}\)</span> is the inverse cumulative normal (probit) function, <span class="math inline">\(r_{i}\)</span> is the rank of the i’th observation and <span class="math inline">\(n\)</span> is the number of non-missing observations for the ranking variable. This is the inverse cumulative normal probability density of proportional ranks. The resulting variable should appear normally distributed regardless of the input data. We translated this approach using the <a href="http://support.sas.com/documentation/cdl/en/proc/61895/HTML/default/viewer.htm#a000146840.htm">SAS documentation</a> as a guide resulting in the following R function.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">normalScores &lt;-<span class="st"> </span>function(
@@ -172,13 +160,13 @@ y_{i} = \phi^{-1} \frac{r_{i}}{n + 1}
 </div>
 <div id="replaceMissing" class="section level2">
 <h2><span class="header-section-number">5.2</span> replaceMissing</h2>
-<p>A simple utility function to replace missing values, once normalised indicator scores have been calculated. A convenience wrapper around <code>replace</code>. The function find missing values (as well as <code>Inf</code> and <code>-Inf</code>) in a vector and replaces them with <code>0</code>. The use case is for example when a data zone is empty, has a missing value for an indicator but we want it to sit in the centre of the distribution and so we assign a value of 0.</p>
+<p>This function replaces missing values, once normalised indicator scores have been calculated. The function finds missing values (as well as <code>Inf</code> and <code>-Inf</code>) in a vector and replaces them with <code>0</code>. This is used in <strong>openSIMD</strong> where a data zone has zero population, or has a missing value for an indicator, and we want it to sit in the centre of the distribution and so we assign a value of 0.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">replaceMissing &lt;-<span class="st"> </span>function(v) <span class="kw">replace</span>(v, <span class="kw">is.na</span>(v) |<span class="st"> </span>v ==<span class="st"> </span><span class="ot">Inf</span> |<span class="st"> </span>v ==<span class="st"> </span>-<span class="ot">Inf</span>, <span class="dv">0</span>)</code></pre></div>
-<p>Pass a numeric vector <code>v</code> and return a vector of equal length with missing values filled.</p>
+<p>The function takes a numeric vector <code>v</code> and returns a vector of equal length with missing values replaced with 0.</p>
 </div>
 <div id="getFAWeights" class="section level2">
 <h2><span class="header-section-number">5.3</span> getFAWeights</h2>
-<p>This function performs a factor analysis using the <code>psych::fa</code> function. It then extracts the weights on the first resulting factor, converts then to poportions (of the sum of weights) and then returns them as individual elements of a list. This is designed to be equivalent to the SAS procedure in previous SIMD calculations, however the results are only comparable to two decimal places, likely due to differences in the implementation of factor analysis in the two packages (see <a href="tests.html#tests">section on tests</a>).</p>
+<p>This function performs a factor analysis using the <code>psych::fa</code> function. It then extracts the loadings on the first resulting factor, converts them to proportions of the sum of loadings, the weights, and then returns them as individual elements of a list. This is designed to be equivalent to the SAS procedure in previous SIMD calculations, however the results are only comparable up to two decimal places, likely due to differences in the implementation of factor analysis in the two packages (see <a href="QA.html#QA">section on Quality Assurance</a>).</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">getFAWeights &lt;-<span class="st"> </span>function(dat, ...) {
   
   fact &lt;-<span class="st"> </span>psych::<span class="kw">fa</span>(dat, <span class="dt">nfactors =</span> <span class="dv">1</span>, <span class="dt">fm =</span> <span class="st">&quot;ml&quot;</span>, <span class="dt">rotate =</span> <span class="st">&quot;none&quot;</span>, ...)
@@ -192,11 +180,11 @@ y_{i} = \phi^{-1} \frac{r_{i}}{n + 1}
   <span class="kw">return</span>(<span class="kw">lapply</span>(<span class="kw">seq_along</span>(f1_weights$ML1), function(i) f1_weights$ML1[i]))
 
   }</code></pre></div>
-<p>The function takes a data frame <code>dat</code> as its main argument, it is assumed that this data frame contains all of the variables for factor analysis and in the required order. The return value is a list with individual elements corresponding to the proportional weight of variables in the same order as the input data. A list is returned here for compatibility with the next function <code>combineWeightsAndNorms</code> however this can be easily converted to a vector with <code>unlist</code>.</p>
+<p>The function takes a data.frame <code>dat</code> which contains all of the variables for factor analysis in the required order. The return value is a list with individual elements corresponding to the weights of variables in the same order as the input data. A list is returned here for compatibility with the next function <code>combineWeightsAndNorms</code>; however, this can be easily converted to a vector with <code>unlist</code>.</p>
 </div>
 <div id="combineWeightsAndNorms" class="section level2">
 <h2><span class="header-section-number">5.4</span> combineWeightsAndNorms</h2>
-<p>This function takes the normalised indicator scores and the weights derived from factor analysis, multiplies them out and then takes the sum of these weighted indicator scores to get the final score for that domain.</p>
+<p>This function takes the normalised indicator scores and the weights derived from factor analysis, multiplies them out and then takes the sum of these weighted indicator scores to get the final score for that domain. Weights and indicators need to be in the same order.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">combineWeightsAndNorms &lt;-<span class="st"> </span>function(weights, norms) {
   
   combined &lt;-<span class="st"> </span>purrr::<span class="kw">map2</span>(weights, norms, ~<span class="st"> </span>.x *<span class="st"> </span>.y)
@@ -204,11 +192,11 @@ y_{i} = \phi^{-1} \frac{r_{i}}{n + 1}
   combined %&gt;%<span class="st"> </span>data.frame %&gt;%<span class="st"> </span>rowSums
   
 }</code></pre></div>
-<p>The function takes a list of weights (generated by <code>getFAWeights</code> and a data.frame of normalised scores, it returns a numeric vector containing the combined domain score.</p>
+<p>The function takes a list of weights (generated by <code>getFAWeights</code>) and a data.frame of normalised scores. The function returns a numeric vector containing the combined domain score.</p>
 </div>
 <div id="expoTransform" class="section level2">
-<h2><span class="header-section-number">5.5</span>  expoTransform</h2>
-<p>This function recapitulates the exponential transformation used in SIMD to transform the weighted domain ranks before combining domains.</p>
+<h2><span class="header-section-number">5.5</span> expoTransform</h2>
+<p>This function exponentially transforms the (inverted) domain ranks.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">expoTransform &lt;-<span class="st"> </span>function(ranks) {
   
   prop_ranks &lt;-<span class="st"> </span>ranks /<span class="st"> </span><span class="kw">max</span>(ranks)
@@ -217,11 +205,11 @@ y_{i} = \phi^{-1} \frac{r_{i}}{n + 1}
   
   <span class="kw">return</span>(expo)
 }</code></pre></div>
-<p>The function takes an numeric vector (of the ranks) and returns a numeric vector of equal length containing the transformed values.</p>
+<p>The function takes a numeric vector of the (inverted) ranks and returns a numeric vector of equal length containing the transformed values.</p>
 </div>
 <div id="reassignRank" class="section level2">
-<h2><span class="header-section-number">5.6</span>  reassignRank</h2>
-<p>A function to make manual reassignments of ranks to individual data zones, can be used when there are strange exceptions such as empty data zones.</p>
+<h2><span class="header-section-number">5.6</span> reassignRank</h2>
+<p>This function manually reassigns ranks to individual data zones. It can be used, for example, when the domain ranking needs to reflect a population of zero in a data zone.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">reassignRank &lt;-<span class="st"> </span>function(data, domain, data_zone, <span class="dt">end =</span> <span class="st">&quot;max&quot;</span>, <span class="dt">offset =</span> <span class="dv">0</span>) {
   
   if(end ==<span class="st"> &quot;max&quot;</span>) {
@@ -237,7 +225,7 @@ y_{i} = \phi^{-1} \frac{r_{i}}{n + 1}
   
   <span class="kw">return</span>(data)
 }</code></pre></div>
-<p>The function needs a data.frame of ranks containing a collumn named ‘data_zone’. The function will take that data.frame change the rank of the indicator in question (with an optional offset) and then re-rank. The function returns the corrected data.frame.</p>
+<p>The function takes a data.frame containing a column named ‘data_zone’ and a ranked variable. The function changes the rank of the data zone in question (with an optional offset), and it then re-ranks the whole variable. The function returns the corrected data.frame.</p>
 
 </div>
 </div>
@@ -247,7 +235,7 @@ y_{i} = \phi^{-1} \frac{r_{i}}{n + 1}
         </div>
       </div>
 <a href="simd.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-<a href="tests.html" class="navigation navigation-next " aria-label="Next page""><i class="fa fa-angle-right"></i></a>
+<a href="QA.html" class="navigation navigation-next " aria-label="Next page""><i class="fa fa-angle-right"></i></a>
 
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
 <script src="libs/gitbook-2.6.7/js/lunr.js"></script>
@@ -278,7 +266,7 @@ gitbook.start({
 "link": null,
 "text": null
 },
-"download": ["_main.pdf"],
+"download": null,
 "toc": {
 "collapse": "subsection"
 }

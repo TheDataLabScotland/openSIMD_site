@@ -1,0 +1,167 @@
+# Quality Assurance {#QA}
+
+```{r, message=FALSE, warning=FALSE, include=FALSE}
+library(readxl)
+library(dplyr)
+source("../openSIMD_analysis/scripts/utils/helpers.R")
+```
+
+In this section, we will show how accurate our translation of the SIMD procedure from SAS to R is. For this, we'll compare the outputs from SAS and R at different points in the calculation.
+
+You will see that the R code correctly replicates the SAS code, but that there are small numeric differences between SAS and R outputs due to the way SAS and R run the factor analysis procedure, and rounding. This means that SIMD ranks produced through the **openSIMD** code slightly differ from the official SIMD16 ranks published on the Scottish Government [SIMD website](www.gov.scot/SIMD).
+
+Future updates of SIMD will be calculated using R, and the **openSIMD** R code will produce SIMD ranks that are identical with the official SIMD ranks published by the Scottish Government.
+
+## Normalisation
+
+Here, we look at the normalisation step and compare the normalised scores of an education indicator, the percentage of people with no qualifications, calculated in SAS and in R.
+
+Loading the indicator raw data and the (SAS-)normalised indicator scores:
+
+```{r, message=FALSE, warning=FALSE}
+noquals <- read_excel("../openSIMD_analysis/data/SAS NOQUALSDATA.xls")
+str(noquals)
+```
+
+Normalising the indicator data, but now in R:
+
+```{r}
+noquals$r_nnoquals <- normalScores(noquals$Noquals)
+```
+
+Comparing the two sets of normalised scores, asking to which degree of precision we have reproduced the result obtained in SAS.
+
+```{r}
+checkEquivalence <- function(x, y, sig_figs) {
+  same <- lapply(sig_figs, function(n) identical(signif(x, n), signif(y, n))) %>% unlist
+  data.frame(significant_figures = sig_figs, is_identical = same)
+}
+
+checkEquivalence(noquals$nnoquals, noquals$r_nnoquals, 1:16)
+```
+
+The normalised scores for this indicator are identical to eleven decimal places. We believe the remaining differences are due to small differences in how SAS and R work.
+
+## Factor analysis
+
+Here, we look at the factor analysis step.
+
+To test whether SAS and R produce equivalent weights, we load the published indicators and the weights derived from SAS.
+
+```{r}
+indicators <- read_excel("../openSIMD_analysis/data/SIMD16 indicator data.xlsx", sheet = 3, na = "*")
+sas_weights <- read_excel("../openSIMD_analysis/data/SAS WEIGHTS.xlsx")
+```
+
+As an example, we'll calculate the health domain weights.
+
+```{r}
+r_weights <- indicators %>%
+  select(CIF, SMR, LBWT, DRUG, ALCOHOL, DEPRESS, EMERG) %>%
+  mutate_all(funs(normalScores)) %>%
+  mutate_all(funs(replaceMissing)) %>%
+  getFAWeights %>% 
+  unlist
+
+sas_weights <- sas_weights %>% select(wt_cif:wt_emerg) %>% unlist
+names(sas_weights) <- NULL
+```
+
+**Note**: You should see a warning here when [`normalScores`](#normalScores) propagates a few missing values.
+
+Now that we have the two sets of health domain weights, we can use the same method as above to compare them.
+
+```{r}
+checkEquivalence(sas_weights, r_weights, 1:5)
+```
+
+The factor analysis weights are equivalent between the two platforms to two significant figures. Again, we think that this is due to the specific implementation of the factor analysis algorithm in the two platforms.
+
+## Domain ranks
+
+Here, we look at how well domain ranks derived through R correlate with the ranks derived through SAS. First, we need a few more packages, and we will load in the SAS results and R results.
+
+```{r}
+library(tidyr)
+library(ggplot2)
+library(purrr)
+sas_results <- read_excel("../openSIMD_analysis/data/SAS SIMD and domain ranks.xlsx", 1)
+r_results <- read.csv("../openSIMD_analysis/results/domain_ranks.csv")
+```
+
+Now we need to select the necessary columns and rename them. Then, we need to join the two datasets together for plotting.
+
+```{r}
+sas_domains <- sas_results %>%
+  select(-IZ, -LA, -pop, -wapop, -SIMD)
+names(sas_domains) <- c("data_zone", "income", "employment", "health",
+                        "education", "access", "crime", "housing")
+
+sas_domains$source <- "sas"
+r_results$source <- "r"
+
+sas_domains <- gather(sas_domains, domain, rank, -data_zone, -source)
+r_results <- gather(r_results, domain, rank, -data_zone, -source)
+results <- rbind(sas_domains, r_results) %>% spread(source, rank)
+```
+
+Finally, we plot the R- and SAS-derived domain ranks against each other and look at the correlations. We also look at the distribution of differences in domain ranks.
+
+```{r}
+ggplot(results, aes(x = sas, y = r)) +
+  geom_point() +
+  facet_wrap(~ domain)
+ggplot(results, aes(x = abs(sas - r))) +
+  geom_histogram(bins = 20) +
+  facet_wrap(~ domain)
+```
+
+Here, we calculate the correlation coefficient for each comparison, and the median difference in rank.
+
+```{r}
+results %>%
+  group_by(domain) %>%
+  nest %>%
+  mutate(rho = map_dbl(data, ~ cor.test(.$sas, .$r, method = "spearman", exact = FALSE)$estimate)) %>%
+  mutate(median_diff = map_dbl(data, ~ median(.$r - .$sas))) %>%
+  select(domain, rho, median_diff)
+```
+
+The results tell us that the ranks are highly correlated but not exactly equal. The largest rank difference is 61, found in the education domain. These differences are due to the numerical discrepancies in the factor analysis step. 
+
+## SIMD ranks
+
+Here, we compare the final SIMD rankings between the two platforms. Again, we need to read in the data and join it up.
+
+```{r}
+sas_simd <- sas_results %>% select(DZ, SIMD)
+r_simd <- read.csv("../openSIMD_analysis/results/openSIMD_ranks.csv")
+names(sas_simd) <- c("data_zone", "sas")
+names(r_simd) <- c("data_zone", "r")
+simd_results <- left_join(sas_simd, r_simd)
+```
+
+Then we examine the correlation in SIMD rankings between R and SAS, and the distribution of differences in SIMD rank.
+
+```{r}
+simd_results %>%
+  mutate(rho = cor.test(.$sas, .$r, method = "spearman", exact = FALSE)$estimate) %>%
+  mutate(median_diff = median(.$r - .$sas)) %>%
+  mutate(domain = 'SIMD') %>%
+  select(domain, rho, median_diff) %>%
+  slice(1:1)
+
+p1 <- ggplot(simd_results, aes(x = sas, y = r)) +
+  geom_point()
+
+p2 <- ggplot(simd_results, aes(x = abs(sas - r))) +
+  geom_histogram(bins = 20)
+gridExtra::grid.arrange(p1, p2)
+
+```
+
+While there is a tight correlation in the final SIMD rankings, there are some differences. Mostly, these differences lie between 0 and 10 with the largest difference as high as 18.
+
+## Conclusion
+
+The differences between rankings derived using R versus using SAS are mainly due to the factor analysis step, which calculates the indicator weights in the health, education, and access domains. As a result, the weights differ in value after the second decimal place. As all discrepancies can be explained, and the correlation is very high, we conclude that the **openSIMD** R code replicates the original SAS code correctly.

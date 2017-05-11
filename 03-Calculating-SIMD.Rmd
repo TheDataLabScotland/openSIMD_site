@@ -1,8 +1,14 @@
 # Calculating SIMD {#simd}
 
-For the final calculation of the SIMD score and ranks we follow a few simple steps, see the script `openSIMD_analysis/scripts/calculations/openSIMD.R`.
+For the final calculation of the SIMD ranks we follow a few simple steps, see the script `scripts/calculations/openSIMD.R`:
 
-First we load the packages and data from the previous domain rank calculations.
+- load packages and data
+- inverse domain rankings
+- exponentially transform the inversed domain rankings
+- combine transformed domain scores
+- rank final SIMD scores
+
+First, we load the packages and data from the previous domain rank calculations.
 
 ```{r}
 library(dplyr)
@@ -10,7 +16,7 @@ source("../openSIMD_analysis/scripts/utils/helpers.R")
 domains <- read.csv("../openSIMD_analysis/results/domain_ranks.csv")
 ```
 
-Then we inverse rank the domain ranks (so that low values are most deprived) and exponentially transform, spreading out the most deprived areas for a finer distinction in this region.
+Then we inverse the domain rankings (so that 1 = least deprived) and exponentially transform them, using [`expoTransform`](#expoTransform). This step spreads out the scores at the deprived end of each domain, so that where an area is deprived in one domain, this deprivation won't be cancelled out by a lack of deprivation in another domain.
 
 ```{r}
 invRank <- function(v) rank(-v)
@@ -20,7 +26,7 @@ exponential_domains <- domains %>%
   mutate_at(vars(-data_zone), funs(expoTransform))
 ```
 
-We then combine the domain ranks via a weighting and rank the resulting combination.
+We then combine the domain ranks using fixed weightings.
 
 ```{r}
 with(exponential_domains, {
@@ -35,9 +41,10 @@ with(exponential_domains, {
 })
 ```
 
-Finally we invert the rank once more giving us the final SIMD rank.
+Finally, we rank the final SIMD score to get the SIMD rankings (1 = most deprived).
 
 ```{r}
 simd_rank <- rank(-simd_score)
 ```
 
+SIMD and domain ranks are saved in `results/domain_ranks.csv` and `results/openSIMD_ranks.csv`.

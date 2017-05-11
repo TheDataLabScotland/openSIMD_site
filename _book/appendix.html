@@ -32,7 +32,7 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black">
   
   
-<link rel="prev" href="tests.html">
+<link rel="prev" href="QA.html">
 
 
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
@@ -101,29 +101,10 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <ul class="summary">
 <li class="chapter" data-level="1" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i><b>1</b> Preface</a></li>
 <li class="chapter" data-level="2" data-path="introduction.html"><a href="introduction.html"><i class="fa fa-check"></i><b>2</b> Introduction</a></li>
-<li class="chapter" data-level="3" data-path="calculating-domains.html"><a href="calculating-domains.html"><i class="fa fa-check"></i><b>3</b> Calculating Domains</a><ul>
-<li class="chapter" data-level="3.1" data-path="calculating-domains.html"><a href="calculating-domains.html#setting-up"><i class="fa fa-check"></i><b>3.1</b> Setting up</a></li>
-<li class="chapter" data-level="3.2" data-path="calculating-domains.html"><a href="calculating-domains.html#the-recipe"><i class="fa fa-check"></i><b>3.2</b> The recipe</a></li>
-<li class="chapter" data-level="3.3" data-path="calculating-domains.html"><a href="calculating-domains.html#dplyr"><i class="fa fa-check"></i><b>3.3</b> dplyr</a></li>
-<li class="chapter" data-level="3.4" data-path="calculating-domains.html"><a href="calculating-domains.html#an-example-education"><i class="fa fa-check"></i><b>3.4</b> An example: Education</a></li>
-<li class="chapter" data-level="3.5" data-path="calculating-domains.html"><a href="calculating-domains.html#variations"><i class="fa fa-check"></i><b>3.5</b> Variations</a></li>
-<li class="chapter" data-level="3.6" data-path="calculating-domains.html"><a href="calculating-domains.html#re-assigning-ranks"><i class="fa fa-check"></i><b>3.6</b> Re-assigning ranks</a></li>
-</ul></li>
+<li class="chapter" data-level="3" data-path="calculating-domains.html"><a href="calculating-domains.html"><i class="fa fa-check"></i><b>3</b> Calculating Domains</a></li>
 <li class="chapter" data-level="4" data-path="simd.html"><a href="simd.html"><i class="fa fa-check"></i><b>4</b> Calculating SIMD</a></li>
-<li class="chapter" data-level="5" data-path="functions.html"><a href="functions.html"><i class="fa fa-check"></i><b>5</b> Functions</a><ul>
-<li class="chapter" data-level="5.1" data-path="functions.html"><a href="functions.html#normalScores"><i class="fa fa-check"></i><b>5.1</b> normalScores</a></li>
-<li class="chapter" data-level="5.2" data-path="functions.html"><a href="functions.html#replaceMissing"><i class="fa fa-check"></i><b>5.2</b> replaceMissing</a></li>
-<li class="chapter" data-level="5.3" data-path="functions.html"><a href="functions.html#getFAWeights"><i class="fa fa-check"></i><b>5.3</b> getFAWeights</a></li>
-<li class="chapter" data-level="5.4" data-path="functions.html"><a href="functions.html#combineWeightsAndNorms"><i class="fa fa-check"></i><b>5.4</b> combineWeightsAndNorms</a></li>
-<li class="chapter" data-level="5.5" data-path="functions.html"><a href="functions.html#expoTransform"><i class="fa fa-check"></i><b>5.5</b>  expoTransform</a></li>
-<li class="chapter" data-level="5.6" data-path="functions.html"><a href="functions.html#reassignRank"><i class="fa fa-check"></i><b>5.6</b>  reassignRank</a></li>
-</ul></li>
-<li class="chapter" data-level="6" data-path="tests.html"><a href="tests.html"><i class="fa fa-check"></i><b>6</b> Tests</a><ul>
-<li class="chapter" data-level="6.1" data-path="tests.html"><a href="tests.html#normalisation"><i class="fa fa-check"></i><b>6.1</b> Normalisation</a></li>
-<li class="chapter" data-level="6.2" data-path="tests.html"><a href="tests.html#factor-analysis-weights"><i class="fa fa-check"></i><b>6.2</b> Factor analysis weights</a></li>
-<li class="chapter" data-level="6.3" data-path="tests.html"><a href="tests.html#domain-ranks"><i class="fa fa-check"></i><b>6.3</b> Domain ranks</a></li>
-<li class="chapter" data-level="6.4" data-path="tests.html"><a href="tests.html#simd-ranks"><i class="fa fa-check"></i><b>6.4</b>  SIMD ranks</a></li>
-</ul></li>
+<li class="chapter" data-level="5" data-path="functions.html"><a href="functions.html"><i class="fa fa-check"></i><b>5</b> Functions</a></li>
+<li class="chapter" data-level="6" data-path="QA.html"><a href="QA.html"><i class="fa fa-check"></i><b>6</b> Quality Assurance</a></li>
 <li class="chapter" data-level="7" data-path="appendix.html"><a href="appendix.html"><i class="fa fa-check"></i><b>7</b> Appendix</a></li>
 </ul>
 
@@ -146,33 +127,25 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <h1><span class="header-section-number">7</span> Appendix</h1>
 <p>This book was compiled in the following R session:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">sessionInfo</span>()</code></pre></div>
-<pre><code>## R version 3.4.0 (2017-04-21)
-## Platform: x86_64-apple-darwin15.6.0 (64-bit)
-## Running under: macOS Sierra 10.12.3
-## 
-## Matrix products: default
-## BLAS: /Library/Frameworks/R.framework/Versions/3.4/Resources/lib/libRblas.0.dylib
-## LAPACK: /Library/Frameworks/R.framework/Versions/3.4/Resources/lib/libRlapack.dylib
+<pre><code>## R version 3.3.2 (2016-10-31)
+## Platform: i386-w64-mingw32/i386 (32-bit)
+## Running under: Windows 7 (build 7601) Service Pack 1
 ## 
 ## locale:
-## [1] en_GB.UTF-8/en_GB.UTF-8/en_GB.UTF-8/C/en_GB.UTF-8/en_GB.UTF-8
+## [1] LC_COLLATE=English_United Kingdom.1252 
+## [2] LC_CTYPE=English_United Kingdom.1252   
+## [3] LC_MONETARY=English_United Kingdom.1252
+## [4] LC_NUMERIC=C                           
+## [5] LC_TIME=English_United Kingdom.1252    
 ## 
 ## attached base packages:
 ## [1] stats     graphics  grDevices utils     datasets  methods   base     
 ## 
-## other attached packages:
-## [1] purrr_0.2.2   ggplot2_2.2.1 tidyr_0.6.1   dplyr_0.5.0   readxl_1.0.0 
-## 
 ## loaded via a namespace (and not attached):
-##  [1] Rcpp_0.12.10     knitr_1.15.1     magrittr_1.5     munsell_0.4.3   
-##  [5] mnormt_1.5-5     colorspace_1.3-2 lattice_0.20-35  R6_2.2.0        
-##  [9] plyr_1.8.4       stringr_1.2.0    tools_3.4.0      parallel_3.4.0  
-## [13] grid_3.4.0       gtable_0.2.0     nlme_3.1-131     psych_1.7.3.21  
-## [17] DBI_0.6-1        htmltools_0.3.6  yaml_2.1.14      lazyeval_0.2.0  
-## [21] rprojroot_1.2    digest_0.6.12    assertthat_0.2.0 tibble_1.3.0    
-## [25] bookdown_0.3     gridExtra_2.2.1  evaluate_0.10    rmarkdown_1.5   
-## [29] labeling_0.3     stringi_1.1.5    compiler_3.4.0   cellranger_1.1.0
-## [33] scales_0.4.1     backports_1.0.5  foreign_0.8-67</code></pre>
+##  [1] backports_1.0.5 bookdown_0.3    magrittr_1.5    rprojroot_1.2  
+##  [5] tools_3.3.2     htmltools_0.3.6 rstudioapi_0.6  yaml_2.1.14    
+##  [9] Rcpp_0.12.5     stringi_1.1.1   rmarkdown_1.5   knitr_1.15.1   
+## [13] stringr_1.0.0   digest_0.6.9    evaluate_0.10</code></pre>
 
 </div>
             </section>
@@ -180,7 +153,7 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
           </div>
         </div>
       </div>
-<a href="tests.html" class="navigation navigation-prev navigation-unique" aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="QA.html" class="navigation navigation-prev navigation-unique" aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
 
 
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
@@ -212,7 +185,7 @@ gitbook.start({
 "link": null,
 "text": null
 },
-"download": ["_main.pdf"],
+"download": null,
 "toc": {
 "collapse": "subsection"
 }
@@ -220,17 +193,6 @@ gitbook.start({
 });
 </script>
 
-<!-- dynamically load mathjax for compatibility with self-contained -->
-<script>
-  (function () {
-    var script = document.createElement("script");
-    script.type = "text/javascript";
-    script.src  = "https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
-    if (location.protocol !== "file:" && /^https?:/.test(script.src))
-      script.src  = script.src.replace(/^https?:/, '');
-    document.getElementsByTagName("head")[0].appendChild(script);
-  })();
-</script>
 </body>
 
 </html>
