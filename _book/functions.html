@@ -101,7 +101,14 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <ul class="summary">
 <li class="chapter" data-level="1" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i><b>1</b> Preface</a></li>
 <li class="chapter" data-level="2" data-path="introduction.html"><a href="introduction.html"><i class="fa fa-check"></i><b>2</b> Introduction</a></li>
-<li class="chapter" data-level="3" data-path="calculating-domains.html"><a href="calculating-domains.html"><i class="fa fa-check"></i><b>3</b> Calculating Domains</a></li>
+<li class="chapter" data-level="3" data-path="calculating-domains.html"><a href="calculating-domains.html"><i class="fa fa-check"></i><b>3</b> Calculating Domains</a><ul>
+<li class="chapter" data-level="3.1" data-path="calculating-domains.html"><a href="calculating-domains.html#setting-up"><i class="fa fa-check"></i><b>3.1</b> Setting up</a></li>
+<li class="chapter" data-level="3.2" data-path="calculating-domains.html"><a href="calculating-domains.html#the-recipe"><i class="fa fa-check"></i><b>3.2</b> The recipe</a></li>
+<li class="chapter" data-level="3.3" data-path="calculating-domains.html"><a href="calculating-domains.html#dplyr"><i class="fa fa-check"></i><b>3.3</b> dplyr</a></li>
+<li class="chapter" data-level="3.4" data-path="calculating-domains.html"><a href="calculating-domains.html#an-example-education"><i class="fa fa-check"></i><b>3.4</b> An example: Education</a></li>
+<li class="chapter" data-level="3.5" data-path="calculating-domains.html"><a href="calculating-domains.html#Variations"><i class="fa fa-check"></i><b>3.5</b> Variations</a></li>
+<li class="chapter" data-level="3.6" data-path="calculating-domains.html"><a href="calculating-domains.html#re-assigning-ranks"><i class="fa fa-check"></i><b>3.6</b> Re-assigning ranks</a></li>
+</ul></li>
 <li class="chapter" data-level="4" data-path="simd.html"><a href="simd.html"><i class="fa fa-check"></i><b>4</b> Calculating SIMD</a></li>
 <li class="chapter" data-level="5" data-path="functions.html"><a href="functions.html"><i class="fa fa-check"></i><b>5</b> Functions</a><ul>
 <li class="chapter" data-level="5.1" data-path="functions.html"><a href="functions.html#normalScores"><i class="fa fa-check"></i><b>5.1</b> normalScores</a></li>
@@ -111,7 +118,13 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <li class="chapter" data-level="5.5" data-path="functions.html"><a href="functions.html#expoTransform"><i class="fa fa-check"></i><b>5.5</b> expoTransform</a></li>
 <li class="chapter" data-level="5.6" data-path="functions.html"><a href="functions.html#reassignRank"><i class="fa fa-check"></i><b>5.6</b> reassignRank</a></li>
 </ul></li>
-<li class="chapter" data-level="6" data-path="QA.html"><a href="QA.html"><i class="fa fa-check"></i><b>6</b> Quality Assurance</a></li>
+<li class="chapter" data-level="6" data-path="QA.html"><a href="QA.html"><i class="fa fa-check"></i><b>6</b> Quality Assurance</a><ul>
+<li class="chapter" data-level="6.1" data-path="QA.html"><a href="QA.html#normalisation"><i class="fa fa-check"></i><b>6.1</b> Normalisation</a></li>
+<li class="chapter" data-level="6.2" data-path="QA.html"><a href="QA.html#factor-analysis"><i class="fa fa-check"></i><b>6.2</b> Factor analysis</a></li>
+<li class="chapter" data-level="6.3" data-path="QA.html"><a href="QA.html#domain-ranks"><i class="fa fa-check"></i><b>6.3</b> Domain ranks</a></li>
+<li class="chapter" data-level="6.4" data-path="QA.html"><a href="QA.html#simd-ranks"><i class="fa fa-check"></i><b>6.4</b> SIMD ranks</a></li>
+<li class="chapter" data-level="6.5" data-path="QA.html"><a href="QA.html#conclusion"><i class="fa fa-check"></i><b>6.5</b> Conclusion</a></li>
+</ul></li>
 <li class="chapter" data-level="7" data-path="appendix.html"><a href="appendix.html"><i class="fa fa-check"></i><b>7</b> Appendix</a></li>
 </ul>
 
@@ -180,7 +193,7 @@ y_{i} = \phi^{-1}\left(\frac{r_{i}}{n + 1}\right)
   <span class="kw">return</span>(<span class="kw">lapply</span>(<span class="kw">seq_along</span>(f1_weights$ML1), function(i) f1_weights$ML1[i]))
 
   }</code></pre></div>
-<p>The function takes a data.frame <code>dat</code> which contains all of the variables for factor analysis in the required order. The return value is a list with individual elements corresponding to the weights of variables in the same order as the input data. A list is returned here for compatibility with the next function <code>combineWeightsAndNorms</code>; however, this can be easily converted to a vector with <code>unlist</code>.</p>
+<p>The function takes a data.frame <code>dat</code> which contains all of the variables for factor analysis. The return value is a list with individual elements corresponding to the weights of variables in the same order as the columns in the input data. A list is returned here for compatibility with the next function <code>combineWeightsAndNorms</code>; however, this can be easily converted to a vector with <code>unlist</code>.</p>
 </div>
 <div id="combineWeightsAndNorms" class="section level2">
 <h2><span class="header-section-number">5.4</span> combineWeightsAndNorms</h2>
@@ -266,7 +279,7 @@ gitbook.start({
 "link": null,
 "text": null
 },
-"download": null,
+"download": ["_main.pdf"],
 "toc": {
 "collapse": "subsection"
 }

@@ -12,13 +12,13 @@ description: "This project is a translation of the SIMD procedure from SAS into 
 
 # Preface
 
-The Scottish Index of Multiple Deprivation (SIMD) is the Scottish Government's official tool for finding the most deprived areas in Scotland. SIMD is used by government, councils, charities and communities to make sure that the work they do is targeted to those areas that need it most.
+The Scottish Index of Multiple Deprivation (SIMD) is the Scottish Government's official tool for finding the most deprived areas in Scotland. SIMD is used by government, councils, charities and communities as evidence to help target their work to those areas that need it most.
 
 SIMD is best known for how it ranks each small area in Scotland by how deprived it is. But in addition to the rankings, all indicator datasets that go into SIMD are also published on a small area level. This wealth of granular data provides detailed information about the underlying issues in deprived areas. 
 
 **openSIMD** opens up SIMD further by making the code used to calculate SIMD available to anyone who wants to understand exactly how SIMD indicators are combined, or replicate the method for similar measures. 
 
-SIMD is updated every three years, and up until the latest edition, SIMD16, SIMDs have been calculated using the statistical package SAS. Through the **openSIMD** project, we have translated the calculation steps into R. The results of both calculations differ slightly due to small differences in how each program runs a statistical procedure called factor analysis. SIMD16 as published on the [SIMD website](www.gov.scot/SIMD) is the official version.
+SIMD is updated around every three years, and up until the latest edition, SIMD16, SIMDs have been calculated using the statistical package SAS. Through the **openSIMD** project, we have translated the calculation steps into R. The results of both calculations differ slightly due to small differences in how each program runs a statistical procedure called factor analysis. SIMD16 as published on the [SIMD website](www.gov.scot/SIMD) is the official version.
 
 Future updates of SIMD will be calculated using R, and the **openSIMD** R code will produce SIMD ranks that are identical with the official SIMD ranks published by the Scottish Government.
 
