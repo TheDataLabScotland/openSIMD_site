@@ -68,7 +68,7 @@ getFAWeights <- function(dat, ...) {
   }
 ```
 
-The function takes a data.frame `dat` which contains all of the variables for factor analysis. The return value is a list with individual elements corresponding to the weights of variables in the same order as the columns in the input data. A list is returned here for compatibility with the next function `combineWeightsAndNorms`; however, this can be easily converted to a vector with `unlist`.
+The function takes a data.frame `dat` which contains all of the variables for factor analysis. The return value is a list with individual elements corresponding to the weights of variables in the same order as the collumns in the input data. A list is returned here for compatibility with the next function `combineWeightsAndNorms`; however, this can be easily converted to a vector with `unlist`.
 
 ## combineWeightsAndNorms {#combineWeightsAndNorms}
 

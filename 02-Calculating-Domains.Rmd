@@ -31,7 +31,7 @@ Starting in `domains.R`, the first things to do are:
 
 You will need to make sure that the file paths in your code correspond to where your files are. If you are using RStudio and you have opened the `openSIMD_analysis.Rproj` then the directories of interest will be `scripts/utils` and `data`.
 
-You may experience an error when reading the .xlsx file files with `read_excel`. If this happens you have two options. Either you can open the file in excel, save it and try again. The file should now read into R without an error. Alternatively you can save the file a .csv file (make sure you select the correct sheet) and then read it into R using the `read.csv` function.
+You may experience an error when reading the .xlsx file files with `read_excel`. If this happens you have two options. Either you can open the file in Excel, save it, close it, and try again. The file should now read into R without an error. Alternatively, you can save the file as a .csv file (make sure you select the correct sheet) and then read it into R using the `read.csv` function.
 
 ```{r load_resources}
 library(readxl)
