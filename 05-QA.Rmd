@@ -107,7 +107,7 @@ results <- rbind(sas_domains, r_results) %>% spread(source, rank)
 
 Finally, we plot the R- and SAS-derived domain ranks against each other and look at the correlations. We also look at the distribution of differences in domain ranks.
 
-```{r, dev=c("pdf", "svg")}
+```{r}
 ggplot(results, aes(x = sas, y = r)) +
   geom_point() +
   facet_wrap(~ domain)
@@ -143,7 +143,7 @@ simd_results <- left_join(sas_simd, r_simd)
 
 Then we examine the correlation in SIMD rankings between R and SAS, and the distribution of differences in SIMD rank.
 
-```{r, dev=c("pdf", "svg")}
+```{r}
 simd_results %>%
   mutate(rho = cor.test(.$sas, .$r, method = "spearman", exact = FALSE)$estimate) %>%
   mutate(median_diff = median(.$r - .$sas)) %>%
