@@ -241,11 +241,11 @@ results &lt;-<span class="st"> </span><span class="kw">rbind</span>(sas_domains,
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">ggplot</span>(results, <span class="kw">aes</span>(<span class="dt">x =</span> sas, <span class="dt">y =</span> r)) +
 <span class="st">  </span><span class="kw">geom_point</span>() +
 <span class="st">  </span><span class="kw">facet_wrap</span>(~<span class="st"> </span>domain)</code></pre></div>
-<p><img src="_main_files/figure-html/unnamed-chunk-25-1.png" width="672" /></p>
+<p><img src="_main_files/figure-html/unnamed-chunk-25-1.pdf" width="672" /></p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">ggplot</span>(results, <span class="kw">aes</span>(<span class="dt">x =</span> <span class="kw">abs</span>(sas -<span class="st"> </span>r))) +
 <span class="st">  </span><span class="kw">geom_histogram</span>(<span class="dt">bins =</span> <span class="dv">20</span>) +
 <span class="st">  </span><span class="kw">facet_wrap</span>(~<span class="st"> </span>domain)</code></pre></div>
-<p><img src="_main_files/figure-html/unnamed-chunk-25-2.png" width="672" /></p>
+<p><img src="_main_files/figure-html/unnamed-chunk-25-2.pdf" width="672" /></p>
 <p>Here, we calculate the correlation coefficient for each comparison, and the median difference in rank.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">results %&gt;%
 <span class="st">  </span><span class="kw">group_by</span>(domain) %&gt;%
@@ -292,7 +292,7 @@ simd_results &lt;-<span class="st"> </span><span class="kw">left_join</span>(sas
 p2 &lt;-<span class="st"> </span><span class="kw">ggplot</span>(simd_results, <span class="kw">aes</span>(<span class="dt">x =</span> <span class="kw">abs</span>(sas -<span class="st"> </span>r))) +
 <span class="st">  </span><span class="kw">geom_histogram</span>(<span class="dt">bins =</span> <span class="dv">20</span>)
 gridExtra::<span class="kw">grid.arrange</span>(p1, p2)</code></pre></div>
-<p><img src="_main_files/figure-html/unnamed-chunk-28-1.png" width="672" /></p>
+<p><img src="_main_files/figure-html/unnamed-chunk-28-1.pdf" width="672" /></p>
 <p>While there is a tight correlation in the final SIMD rankings, there are some differences. Mostly, these differences lie between 0 and 10 with the largest difference as high as 18.</p>
 </div>
 <div id="conclusion" class="section level2">
@@ -338,7 +338,7 @@ gitbook.start({
 "link": null,
 "text": null
 },
-"download": null,
+"download": ["_main.pdf"],
 "toc": {
 "collapse": "subsection"
 }
